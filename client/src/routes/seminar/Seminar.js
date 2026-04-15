@@ -569,7 +569,7 @@ const Seminar = () => {
                                             submission. Try reaching us directly
                                             at{' '}
                                             {scramble(
-                                                'kevin.combs@contractorgarage.com'
+                                                'kcombs@insightcommercial.net'
                                             )}
                                         </p>
                                     )}
