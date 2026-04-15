@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.ac59a794.css",
-    "main.js": "/static/js/main.7bcdb2b5.js",
+    "main.js": "/static/js/main.74d08c0d.js",
     "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
     "static/media/WhatIsContractors.mp4": "/static/media/WhatIsContractors.562a175c26142f32c05e.mp4",
     "static/media/rearloading.jpeg": "/static/media/rearloading.53ba4c372bb46c84f750.jpeg",
@@ -21,11 +21,11 @@
     "static/media/squareDarkTransparent.svg": "/static/media/squareDarkTransparent.dde4f5664b8c5f45c6da06841aa76096.svg",
     "static/media/squareLightTransparent.svg": "/static/media/squareLightTransparent.cbbe2acf81a40701e5284a43c673beb5.svg",
     "main.ac59a794.css.map": "/static/css/main.ac59a794.css.map",
-    "main.7bcdb2b5.js.map": "/static/js/main.7bcdb2b5.js.map",
+    "main.74d08c0d.js.map": "/static/js/main.74d08c0d.js.map",
     "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ac59a794.css",
-    "static/js/main.7bcdb2b5.js"
+    "static/js/main.74d08c0d.js"
   ]
 }
