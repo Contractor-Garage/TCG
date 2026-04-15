@@ -15,7 +15,6 @@
     "deploy": "cd client/ && npm run build && ncp build ../build && cd ../ && git add . && git commit -m \"Deploy Commit\" && git push"
   },
   "dependencies": {
-    "@sendgrid/mail": "^8.1.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.4.1",
@@ -27,7 +26,8 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "mongoose": "^5.12.8",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "nodemailer": "^8.0.5"
   },
   "devDependencies": {
     "ncp": "^2.0.0"

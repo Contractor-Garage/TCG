@@ -3,9 +3,9 @@ var router = express.Router();
 const Location = require('../db/schemas/Location');
 const Preview = require('../db/schemas/Preview');
 const User = require('../db/schemas/User');
-const sgMail = require('@sendgrid/mail');
 const Honeypot = require('../db/schemas/Honeypot');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+const { transporter } = require('../services/mailer');
+const { buildSeminarSignupEmail } = require('../services/emailTemplates');
 
 /*
 *          !!##########################!!
@@ -127,12 +127,20 @@ router.post('/seminar/sign-up', (req, res, next) => {
         return res.status(200).send('sign up complete');
       });
   } else {
-    sgMail.send({
-      to: ['kevin.combs@contractorgarage.com', 'kcombs@insightcommercial.net'],
-      bcc: ['aaron.mcnulty@contractorgarage.com', 'amcnulty88@swbell.net'],
-      from: 'webmaster@contractorgarage.com',
-      templateId: 'd-558864b6508d4cb2880a7c7b45e24b35',
-      dynamicTemplateData: req.body,
+    const emailHtml = buildSeminarSignupEmail(req.body);
+
+    transporter.sendMail({
+      from: '"Contractor Garage Website" <webmaster@contractorgarage.com>',
+      to: [
+        'kevin.combs@contractorgarage.com',
+        'kcombs@insightcommercial.net',
+      ],
+      bcc: [
+        'aaron.mcnulty@contractorgarage.com',
+        'amcnulty88@swbell.net',
+      ],
+      subject: 'New Seminar Signup',
+      html: emailHtml,
     }).then(() => {
       res.status(200).send();
     }).catch(next);
