@@ -38,7 +38,7 @@ export default function PrivacyPolicy() {
       <section className="bg-[#1A1A1A] pt-40 pb-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.22em] text-[#C85A0A] text-xs mb-4">
+            <p className="font-display font-bold uppercase tracking-[0.22em] text-[#CC6633] text-xs mb-4">
               Legal
             </p>
             <h1 className="font-display font-black text-white uppercase leading-none text-[clamp(2.5rem,6vw,5rem)]">
@@ -65,7 +65,7 @@ export default function PrivacyPolicy() {
           <div className="space-y-10">
             {sections.map(({ title, body }, i) => (
               <AnimateOnScroll key={title} delay={i * 0.05}>
-                <div className="border-l-2 border-[#C85A0A] pl-6">
+                <div className="border-l-2 border-[#CC6633] pl-6">
                   <h2 className="font-display font-black uppercase text-xl text-[#1A1A1A] mb-3">
                     {title}
                   </h2>
@@ -82,7 +82,7 @@ export default function PrivacyPolicy() {
               </p>
               <Link
                 to="/development-services#contact"
-                className="inline-block font-display font-bold uppercase tracking-wider text-sm text-[#C85A0A] border-b-2 border-[#C85A0A] pb-0.5 hover:text-[#A84808] hover:border-[#A84808] transition-colors"
+                className="inline-block font-display font-bold uppercase tracking-wider text-sm text-[#CC6633] border-b-2 border-[#CC6633] pb-0.5 hover:text-[#A85228] hover:border-[#A85228] transition-colors"
               >
                 Contact Us →
               </Link>

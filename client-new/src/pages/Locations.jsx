@@ -20,8 +20,8 @@ const statusConfig = {
   },
   'Coming Soon': {
     label: 'Coming Soon',
-    dot: 'bg-[#C85A0A]',
-    badge: 'bg-[#C85A0A]/15 text-[#C85A0A] border border-[#C85A0A]/30',
+    dot: 'bg-[#CC6633]',
+    badge: 'bg-[#CC6633]/15 text-[#CC6633] border border-[#CC6633]/30',
   },
   Full: {
     label: 'Full',
@@ -47,7 +47,7 @@ export default function Locations() {
         <div className="absolute inset-0 bg-[#1A1A1A]/80" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.22em] text-[#C85A0A] text-xs mb-4">
+            <p className="font-display font-bold uppercase tracking-[0.22em] text-[#CC6633] text-xs mb-4">
               KC Metro &amp; Beyond
             </p>
             <h1 className="font-display font-black text-white uppercase leading-none text-[clamp(3rem,8vw,6.5rem)]">
@@ -58,7 +58,7 @@ export default function Locations() {
       </section>
 
       {/* ── AVAILABILITY BANNER ──────────────────────────────── */}
-      <div className="bg-[#C85A0A] py-4">
+      <div className="bg-[#CC6633] py-4">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse flex-shrink-0" />
@@ -113,7 +113,7 @@ export default function Locations() {
                         status === 'Available' ? 'bg-green-50/40' : ''
                       }`}
                     >
-                      <div className="col-span-3 font-display font-bold text-[#1A1A1A] text-sm uppercase tracking-wide group-hover:text-[#C85A0A] transition-colors">
+                      <div className="col-span-3 font-display font-bold text-[#1A1A1A] text-sm uppercase tracking-wide group-hover:text-[#CC6633] transition-colors">
                         {name}
                       </div>
                       <div className="col-span-5 text-[#1A1A1A]/65 text-sm font-body">
@@ -145,7 +145,7 @@ export default function Locations() {
                 <AnimateOnScroll key={slug} delay={i * 0.04}>
                   <Link
                     to={`/location/${slug}`}
-                    className={`block bg-white p-5 border border-[#1A1A1A]/10 hover:border-[#C85A0A]/40 transition-colors ${
+                    className={`block bg-white p-5 border border-[#1A1A1A]/10 hover:border-[#CC6633]/40 transition-colors ${
                       status === 'Available' ? 'border-l-4 border-l-green-500' : ''
                     }`}
                   >
@@ -188,7 +188,7 @@ export default function Locations() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
             <div className="max-w-2xl">
-              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
                 Grow the Network
               </p>
               <h2 className="font-display font-black text-white uppercase leading-tight text-4xl lg:text-5xl mb-6">
@@ -201,7 +201,7 @@ export default function Locations() {
               </p>
               <Link
                 to="/development-services"
-                className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#C85A0A] text-white px-8 py-3.5 hover:bg-[#A84808] transition-colors"
+                className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#CC6633] text-white px-8 py-3.5 hover:bg-[#A85228] transition-colors"
               >
                 Development Consulting →
               </Link>

@@ -1,7 +1,7 @@
 /*
   Nav — sticky top navigation bar.
   - Transparent when at the top of the page (over hero images); dark when scrolled.
-  - Active route is highlighted in orange (#C85A0A).
+  - Active route is highlighted in orange (#CC6633).
   - "Development Consulting" always renders as an orange bordered CTA button.
   - Mobile: animated hamburger menu that collapses to a full-width drawer.
   - Logo always renders in white (white prop) since the nav is always on a dark background.
@@ -61,8 +61,8 @@ export default function Nav() {
                     to={to}
                     className={`ml-3 font-display font-bold uppercase tracking-wider text-sm px-5 py-2 border transition-all duration-200 ${
                       active
-                        ? 'bg-[#C85A0A] border-[#C85A0A] text-white'
-                        : 'border-[#C85A0A] text-[#C85A0A] hover:bg-[#C85A0A] hover:text-white'
+                        ? 'bg-[#CC6633] border-[#CC6633] text-white'
+                        : 'border-[#CC6633] text-[#CC6633] hover:bg-[#CC6633] hover:text-white'
                     }`}
                   >
                     {label}
@@ -75,7 +75,7 @@ export default function Nav() {
                   to={to}
                   className={`font-display font-semibold uppercase tracking-wider text-sm px-4 py-2 transition-colors duration-200 ${
                     active
-                      ? 'text-[#C85A0A]'
+                      ? 'text-[#CC6633]'
                       : 'text-white/85 hover:text-white'
                   }`}
                 >
@@ -123,9 +123,9 @@ export default function Nav() {
               to={to}
               className={`font-display font-bold uppercase tracking-wider text-base py-3 border-b border-white/10 last:border-0 ${
                 cta
-                  ? 'text-[#C85A0A]'
+                  ? 'text-[#CC6633]'
                   : isActive(to)
-                  ? 'text-[#C85A0A]'
+                  ? 'text-[#CC6633]'
                   : 'text-white'
               }`}
             >

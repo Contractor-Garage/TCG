@@ -102,7 +102,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-display font-bold uppercase tracking-[0.22em] text-[#C85A0A] text-sm mb-5"
+            className="font-display font-bold uppercase tracking-[0.22em] text-[#CC6633] text-sm mb-5"
           >
             The Original Since 2008
           </motion.p>
@@ -132,7 +132,7 @@ export default function Home() {
           >
             <Link
               to="/directory"
-              className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#C85A0A] text-white px-8 py-3.5 hover:bg-[#A84808] transition-colors"
+              className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#CC6633] text-white px-8 py-3.5 hover:bg-[#A85228] transition-colors"
             >
               Find a Location
             </Link>
@@ -158,7 +158,7 @@ export default function Home() {
             { value: '~1,000', label: 'Sq Ft / Unit' },
           ].map(({ value, label }) => (
             <div key={label} className="text-right">
-              <div className="font-display font-black text-[#C85A0A] text-4xl leading-none">{value}</div>
+              <div className="font-display font-black text-[#CC6633] text-4xl leading-none">{value}</div>
               <div className="text-white/50 text-xs uppercase tracking-widest mt-1 font-display font-semibold">{label}</div>
             </div>
           ))}
@@ -182,12 +182,12 @@ export default function Home() {
             {/* Left: copy */}
             <div className="px-8 lg:px-16 py-20 lg:py-28 flex flex-col justify-center">
               <AnimateOnScroll>
-                <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+                <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
                   The Concept
                 </p>
                 <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-5xl lg:text-6xl mb-8">
                   Something Better<br />Than Storage.<br />
-                  <span className="text-[#C85A0A]">Less Overhead<br />Than Flex.</span>
+                  <span className="text-[#CC6633]">Less Overhead<br />Than Flex.</span>
                 </h2>
               </AnimateOnScroll>
               <AnimateOnScroll delay={0.1}>
@@ -205,7 +205,7 @@ export default function Home() {
                 </p>
                 <Link
                   to="/about-us"
-                  className="inline-block font-display font-bold uppercase tracking-wider text-sm text-[#C85A0A] border-b-2 border-[#C85A0A] pb-0.5 hover:text-[#A84808] hover:border-[#A84808] transition-colors"
+                  className="inline-block font-display font-bold uppercase tracking-wider text-sm text-[#CC6633] border-b-2 border-[#CC6633] pb-0.5 hover:text-[#A85228] hover:border-[#A85228] transition-colors"
                 >
                   About the Founder →
                 </Link>
@@ -229,7 +229,7 @@ export default function Home() {
       <section className="bg-[#1A1A1A] py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
               Tenant Profile
             </p>
             <h2 className="font-display font-black text-white uppercase leading-none text-5xl lg:text-6xl mb-14">
@@ -240,8 +240,8 @@ export default function Home() {
             {tenantTypes.map((type, i) => (
               <AnimateOnScroll key={type} delay={i * 0.05}>
                 <div className="flex items-start gap-3 group">
-                  <div className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-[#C85A0A]/20 flex items-center justify-center">
-                    <svg className="w-3 h-3 text-[#C85A0A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <div className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-[#CC6633]/20 flex items-center justify-center">
+                    <svg className="w-3 h-3 text-[#CC6633]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
@@ -259,7 +259,7 @@ export default function Home() {
       <section className="bg-[#F7F6F4] py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
               The Investment Case
             </p>
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-5xl lg:text-6xl mb-14">
@@ -270,7 +270,7 @@ export default function Home() {
             {whyCards.map(({ icon, title, body }, i) => (
               <AnimateOnScroll key={title} delay={i * 0.07} className="h-full">
                 <div className="h-full bg-white p-8 lg:p-10 group hover:bg-[#1A1A1A] transition-colors duration-300">
-                  <div className="text-[#C85A0A] mb-5">{icon}</div>
+                  <div className="text-[#CC6633] mb-5">{icon}</div>
                   <h3 className="font-display font-black uppercase text-xl text-[#1A1A1A] group-hover:text-white mb-3 transition-colors">
                     {title}
                   </h3>
@@ -285,7 +285,7 @@ export default function Home() {
       </section>
 
       {/* ── DEVELOPER CTA BAND ───────────────────────────────── */}
-      <section className="bg-[#C85A0A] py-20">
+      <section className="bg-[#CC6633] py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
             <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
@@ -299,7 +299,7 @@ export default function Home() {
               </div>
               <Link
                 to="/development-services"
-                className="flex-shrink-0 inline-block font-display font-bold uppercase tracking-wider text-sm bg-white text-[#C85A0A] px-10 py-4 hover:bg-[#1A1A1A] hover:text-white transition-colors"
+                className="flex-shrink-0 inline-block font-display font-bold uppercase tracking-wider text-sm bg-white text-[#CC6633] px-10 py-4 hover:bg-[#1A1A1A] hover:text-white transition-colors"
               >
                 See How It Works →
               </Link>

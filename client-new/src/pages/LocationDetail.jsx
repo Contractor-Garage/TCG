@@ -33,8 +33,8 @@ const statusConfig = {
     label: 'Available',
   },
   'Coming Soon': {
-    dot: 'bg-[#C85A0A]',
-    badge: 'bg-[#C85A0A]/15 text-[#C85A0A] border border-[#C85A0A]/30',
+    dot: 'bg-[#CC6633]',
+    badge: 'bg-[#CC6633]/15 text-[#CC6633] border border-[#CC6633]/30',
     label: 'Coming Soon',
   },
   Full: {
@@ -47,7 +47,7 @@ const statusConfig = {
 const availabilityRowConfig = {
   Available: 'bg-green-50/60 text-green-700 font-semibold',
   Occupied: 'text-[#1A1A1A]/50',
-  'Coming Soon': 'text-[#C85A0A] font-semibold',
+  'Coming Soon': 'text-[#CC6633] font-semibold',
 }
 
 export default function LocationDetail() {
@@ -113,7 +113,7 @@ export default function LocationDetail() {
             </Link>
             <div className="flex items-start gap-5 flex-wrap">
               <div>
-                <p className="font-display font-bold uppercase tracking-[0.22em] text-[#C85A0A] text-xs mb-3">
+                <p className="font-display font-bold uppercase tracking-[0.22em] text-[#CC6633] text-xs mb-3">
                   Contractor Garage™
                 </p>
                 <h1 className="font-display font-black text-white uppercase leading-none text-[clamp(2.5rem,7vw,5.5rem)]">
@@ -139,7 +139,7 @@ export default function LocationDetail() {
             {/* Description */}
             <div className="lg:col-span-2">
               <AnimateOnScroll>
-                <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+                <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
                   About This Location
                 </p>
                 <p className="text-[#1A1A1A]/70 leading-relaxed text-base lg:text-lg">
@@ -150,31 +150,31 @@ export default function LocationDetail() {
 
             {/* Contact card */}
             <AnimateOnScroll delay={0.1}>
-              <div className="bg-[#F7F6F4] p-8 border-t-4 border-[#C85A0A]">
+              <div className="bg-[#F7F6F4] p-8 border-t-4 border-[#CC6633]">
                 <p className="font-display font-bold uppercase tracking-widest text-xs text-[#1A1A1A]/40 mb-5">
                   Contact
                 </p>
                 <div className="space-y-4 text-sm">
                   {location.phone && (
                     <div className="flex items-start gap-3">
-                      <svg className="w-4 h-4 text-[#C85A0A] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg className="w-4 h-4 text-[#CC6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                       </svg>
-                      <a href={`tel:${location.phone}`} className="text-[#1A1A1A]/80 hover:text-[#C85A0A] transition-colors">
+                      <a href={`tel:${location.phone}`} className="text-[#1A1A1A]/80 hover:text-[#CC6633] transition-colors">
                         {location.phone}
                       </a>
                     </div>
                   )}
                   <div className="flex items-start gap-3">
-                    <svg className="w-4 h-4 text-[#C85A0A] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <svg className="w-4 h-4 text-[#CC6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    <a href={`mailto:${location.email}`} className="text-[#1A1A1A]/80 hover:text-[#C85A0A] transition-colors">
+                    <a href={`mailto:${location.email}`} className="text-[#1A1A1A]/80 hover:text-[#CC6633] transition-colors">
                       {location.email}
                     </a>
                   </div>
                   <div className="flex items-start gap-3">
-                    <svg className="w-4 h-4 text-[#C85A0A] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <svg className="w-4 h-4 text-[#CC6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -186,7 +186,7 @@ export default function LocationDetail() {
                   <div className="mt-6 pt-6 border-t border-[#1A1A1A]/10">
                     <Link
                       to="/development-services#contact"
-                      className="block w-full text-center font-display font-bold uppercase tracking-wider text-sm bg-[#C85A0A] text-white py-3 hover:bg-[#A84808] transition-colors"
+                      className="block w-full text-center font-display font-bold uppercase tracking-wider text-sm bg-[#CC6633] text-white py-3 hover:bg-[#A85228] transition-colors"
                     >
                       Inquire About a Unit
                     </Link>
@@ -196,7 +196,7 @@ export default function LocationDetail() {
                   <div className="mt-6 pt-6 border-t border-[#1A1A1A]/10">
                     <Link
                       to="/development-services#contact"
-                      className="block w-full text-center font-display font-bold uppercase tracking-wider text-sm border-2 border-[#C85A0A] text-[#C85A0A] py-3 hover:bg-[#C85A0A] hover:text-white transition-colors"
+                      className="block w-full text-center font-display font-bold uppercase tracking-wider text-sm border-2 border-[#CC6633] text-[#CC6633] py-3 hover:bg-[#CC6633] hover:text-white transition-colors"
                     >
                       Join Interest List
                     </Link>
@@ -212,7 +212,7 @@ export default function LocationDetail() {
       <section className="bg-[#F7F6F4] py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-2">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
               Get Directions
             </p>
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-8">
@@ -243,7 +243,7 @@ export default function LocationDetail() {
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-2">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
               See It In Action
             </p>
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-8">
@@ -254,7 +254,7 @@ export default function LocationDetail() {
           {location.videos.length === 0 ? (
             <AnimateOnScroll delay={0.1}>
               <div className="relative bg-[#1A1A1A] aspect-video flex items-center justify-center max-w-4xl">
-                <div className="w-16 h-16 rounded-full bg-[#C85A0A] flex items-center justify-center shadow-2xl">
+                <div className="w-16 h-16 rounded-full bg-[#CC6633] flex items-center justify-center shadow-2xl">
                   <svg className="w-6 h-6 text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z" />
                   </svg>
@@ -277,7 +277,7 @@ export default function LocationDetail() {
                         {video.title}
                       </span>
                       <svg
-                        className={`w-5 h-5 text-[#C85A0A] transition-transform ${openVideoIndex === i ? 'rotate-180' : ''}`}
+                        className={`w-5 h-5 text-[#CC6633] transition-transform ${openVideoIndex === i ? 'rotate-180' : ''}`}
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -308,7 +308,7 @@ export default function LocationDetail() {
       <section className="bg-[#1A1A1A] py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-2">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
               What's Included
             </p>
             <h2 className="font-display font-black text-white uppercase leading-none text-3xl lg:text-4xl mb-10">
@@ -319,8 +319,8 @@ export default function LocationDetail() {
             {location.features.map((feature, i) => (
               <AnimateOnScroll key={feature} delay={i * 0.04}>
                 <div className="flex items-start gap-3">
-                  <div className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-[#C85A0A]/20 flex items-center justify-center">
-                    <svg className="w-3 h-3 text-[#C85A0A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <div className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-[#CC6633]/20 flex items-center justify-center">
+                    <svg className="w-3 h-3 text-[#CC6633]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
@@ -338,7 +338,7 @@ export default function LocationDetail() {
 
           {/* Unit Summary */}
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-2">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
               Bay Types
             </p>
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-8">
@@ -367,7 +367,7 @@ export default function LocationDetail() {
 
           {/* Unit Availability */}
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-2">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
               Availability
             </p>
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-8">
@@ -401,7 +401,7 @@ export default function LocationDetail() {
 
           {/* Extras */}
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-2">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
               Add-Ons
             </p>
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-8">
@@ -436,7 +436,7 @@ export default function LocationDetail() {
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-2">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
               Photo Gallery
             </p>
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-8">
@@ -510,7 +510,7 @@ export default function LocationDetail() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
             <div className="max-w-xl">
-              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-2">
+              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
                 Current Tenants
               </p>
               <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-4">
@@ -568,7 +568,7 @@ export default function LocationDetail() {
                 <select
                   value={payUnit}
                   onChange={(e) => setPayUnit(e.target.value)}
-                  className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#C85A0A] transition-colors appearance-none"
+                  className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#CC6633] transition-colors appearance-none"
                 >
                   <option value="">Select your unit…</option>
                   {location.availability
@@ -593,7 +593,7 @@ export default function LocationDetail() {
                     value={payAmount}
                     onChange={(e) => setPayAmount(e.target.value)}
                     placeholder="0.00"
-                    className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] pl-8 pr-4 py-3 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#C85A0A] transition-colors"
+                    className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] pl-8 pr-4 py-3 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#CC6633] transition-colors"
                   />
                 </div>
               </div>
@@ -616,7 +616,7 @@ export default function LocationDetail() {
       )}
 
       {/* ── CTA ──────────────────────────────────────────────── */}
-      <section className="bg-[#C85A0A] py-16">
+      <section className="bg-[#CC6633] py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
             <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
@@ -635,14 +635,14 @@ export default function LocationDetail() {
               <div className="flex flex-wrap gap-4">
                 <Link
                   to="/directory"
-                  className="flex-shrink-0 inline-block font-display font-bold uppercase tracking-wider text-sm border-2 border-white text-white px-8 py-3.5 hover:bg-white hover:text-[#C85A0A] transition-colors"
+                  className="flex-shrink-0 inline-block font-display font-bold uppercase tracking-wider text-sm border-2 border-white text-white px-8 py-3.5 hover:bg-white hover:text-[#CC6633] transition-colors"
                 >
                   All Locations
                 </Link>
                 {location.status !== 'Full' && (
                   <Link
                     to="/development-services#contact"
-                    className="flex-shrink-0 inline-block font-display font-bold uppercase tracking-wider text-sm bg-white text-[#C85A0A] px-8 py-3.5 hover:bg-[#1A1A1A] hover:text-white transition-colors"
+                    className="flex-shrink-0 inline-block font-display font-bold uppercase tracking-wider text-sm bg-white text-[#CC6633] px-8 py-3.5 hover:bg-[#1A1A1A] hover:text-white transition-colors"
                   >
                     {location.status === 'Coming Soon' ? 'Join Interest List →' : 'Inquire Now →'}
                   </Link>

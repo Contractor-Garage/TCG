@@ -86,10 +86,10 @@ export default function BrandWithUs() {
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="bg-[#1A1A1A] pt-40 pb-24 relative overflow-hidden">
         {/* Decorative orange bar */}
-        <div className="absolute top-0 left-0 w-1 h-full bg-[#C85A0A]" />
+        <div className="absolute top-0 left-0 w-1 h-full bg-[#CC6633]" />
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.22em] text-[#C85A0A] text-xs mb-4">
+            <p className="font-display font-bold uppercase tracking-[0.22em] text-[#CC6633] text-xs mb-4">
               For Developers &amp; Investors
             </p>
             <h1 className="font-display font-black text-white uppercase leading-none text-[clamp(3rem,9vw,7rem)] mb-8">
@@ -110,7 +110,7 @@ export default function BrandWithUs() {
       <div className="bg-[#F7F6F4] border-y border-[#1A1A1A]/10">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex flex-col sm:flex-row items-center justify-between gap-5">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-[#C85A0A] flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 rounded-full bg-[#CC6633] flex items-center justify-center flex-shrink-0">
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
               </svg>
@@ -155,7 +155,7 @@ export default function BrandWithUs() {
       <section className="bg-[#F7F6F4] py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
               How to Work With Kevin
             </p>
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-5xl lg:text-6xl mb-4">
@@ -170,15 +170,15 @@ export default function BrandWithUs() {
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl">
             {/* Card 1: Development Consulting — FEATURED */}
             <AnimateOnScroll delay={0.05}>
-              <div className="relative bg-[#1A1A1A] text-white flex flex-col h-full border-t-4 border-[#C85A0A] shadow-2xl shadow-[#1A1A1A]/20">
+              <div className="relative bg-[#1A1A1A] text-white flex flex-col h-full border-t-4 border-[#CC6633] shadow-2xl shadow-[#1A1A1A]/20">
                 <div className="absolute top-0 right-6 -translate-y-1/2">
-                  <span className="inline-block font-display font-black uppercase tracking-widest text-xs bg-[#C85A0A] text-white px-4 py-1.5">
+                  <span className="inline-block font-display font-black uppercase tracking-widest text-xs bg-[#CC6633] text-white px-4 py-1.5">
                     Most Popular
                   </span>
                 </div>
                 <div className="p-8 lg:p-10 flex flex-col flex-1">
                   <div className="mb-6">
-                    <p className="font-display font-bold uppercase tracking-widest text-[#C85A0A] text-xs mb-2">
+                    <p className="font-display font-bold uppercase tracking-widest text-[#CC6633] text-xs mb-2">
                       One-on-One
                     </p>
                     <h3 className="font-display font-black uppercase text-2xl lg:text-3xl mb-1">
@@ -195,7 +195,7 @@ export default function BrandWithUs() {
                   <ul className="space-y-3 flex-1">
                     {consultingFeatures.map((f) => (
                       <li key={f} className="flex items-start gap-3 text-sm text-white/75">
-                        <svg className="w-4 h-4 text-[#C85A0A] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <svg className="w-4 h-4 text-[#CC6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
                         {f}
@@ -206,7 +206,7 @@ export default function BrandWithUs() {
                   <div className="mt-8">
                     <a
                       href="#contact"
-                      className="block w-full text-center font-display font-bold uppercase tracking-wider text-sm bg-[#C85A0A] text-white py-3.5 hover:bg-[#A84808] transition-colors"
+                      className="block w-full text-center font-display font-bold uppercase tracking-wider text-sm bg-[#CC6633] text-white py-3.5 hover:bg-[#A85228] transition-colors"
                     >
                       Talk to Kevin
                     </a>
@@ -220,7 +220,7 @@ export default function BrandWithUs() {
               <div className="bg-white border border-[#1A1A1A]/12 flex flex-col h-full">
                 <div className="p-8 lg:p-10 flex flex-col flex-1">
                   <div className="mb-6">
-                    <p className="font-display font-bold uppercase tracking-widest text-[#C85A0A] text-xs mb-2">
+                    <p className="font-display font-bold uppercase tracking-widest text-[#CC6633] text-xs mb-2">
                       Annual License
                     </p>
                     <h3 className="font-display font-black uppercase text-2xl lg:text-3xl text-[#1A1A1A] mb-1">
@@ -237,7 +237,7 @@ export default function BrandWithUs() {
                   <ul className="space-y-3 flex-1">
                     {subscriptionFeatures.map((f) => (
                       <li key={f} className="flex items-start gap-3 text-sm text-[#1A1A1A]/70">
-                        <svg className="w-4 h-4 text-[#C85A0A] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <svg className="w-4 h-4 text-[#CC6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
                         {f}
@@ -278,7 +278,7 @@ export default function BrandWithUs() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left: content */}
             <AnimateOnScroll>
-              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
                 Self-Paced Learning
               </p>
               <h2 className="font-display font-black text-white uppercase leading-tight text-4xl lg:text-5xl mb-6">
@@ -299,7 +299,7 @@ export default function BrandWithUs() {
                   { num: '05', title: 'Scaling to Multiple Locations', desc: 'Operations, management systems, and how Kevin built 10+ projects across one metro.' },
                 ].map(({ num, title, desc }) => (
                   <div key={num} className="flex gap-4 group">
-                    <span className="font-display font-black text-[#C85A0A] text-xs w-6 flex-shrink-0 mt-0.5">{num}</span>
+                    <span className="font-display font-black text-[#CC6633] text-xs w-6 flex-shrink-0 mt-0.5">{num}</span>
                     <div>
                       <p className="font-display font-bold uppercase text-white text-sm tracking-wide">{title}</p>
                       <p className="text-white/40 text-xs leading-relaxed mt-0.5">{desc}</p>
@@ -307,7 +307,7 @@ export default function BrandWithUs() {
                   </div>
                 ))}
                 <div className="flex gap-4 border-t border-white/10 pt-3 mt-2">
-                  <span className="font-display font-black text-[#C85A0A] text-xs w-6 flex-shrink-0 mt-0.5">★</span>
+                  <span className="font-display font-black text-[#CC6633] text-xs w-6 flex-shrink-0 mt-0.5">★</span>
                   <div>
                     <p className="font-display font-bold uppercase text-white text-sm tracking-wide">Bonus: The Banker Video</p>
                     <p className="text-white/40 text-xs leading-relaxed mt-0.5">How Kevin finances these projects — what lenders look for and how to structure the deal.</p>
@@ -317,7 +317,7 @@ export default function BrandWithUs() {
 
               <a
                 href="#contact"
-                className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#C85A0A] text-white px-8 py-3.5 hover:bg-[#A84808] transition-colors"
+                className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#CC6633] text-white px-8 py-3.5 hover:bg-[#A85228] transition-colors"
               >
                 Get Course Access →
               </a>
@@ -327,7 +327,7 @@ export default function BrandWithUs() {
             <AnimateOnScroll delay={0.1} direction="left">
               {/* TODO: Replace href with actual Teachable course URL when available */}
               <div className="relative bg-[#0D0D0D] aspect-video flex items-center justify-center group cursor-pointer border border-white/10">
-                <div className="w-20 h-20 rounded-full bg-[#C85A0A] flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
+                <div className="w-20 h-20 rounded-full bg-[#CC6633] flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
                   <svg className="w-7 h-7 text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z" />
                   </svg>
@@ -350,7 +350,7 @@ export default function BrandWithUs() {
                   </div>
                   <a
                     href="#contact"
-                    className="font-display font-bold uppercase tracking-wider text-xs text-[#C85A0A] border border-[#C85A0A] px-4 py-2 hover:bg-[#C85A0A] hover:text-white transition-colors"
+                    className="font-display font-bold uppercase tracking-wider text-xs text-[#CC6633] border border-[#CC6633] px-4 py-2 hover:bg-[#CC6633] hover:text-white transition-colors"
                   >
                     {/* TODO: Replace href="#contact" with direct Teachable course URL */}
                     Enroll →
@@ -366,7 +366,7 @@ export default function BrandWithUs() {
       <section className="bg-[#F7F6F4] py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
               The Investment Case
             </p>
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-5xl lg:text-6xl mb-14">
@@ -377,7 +377,7 @@ export default function BrandWithUs() {
             {investmentCase.map(({ icon, title, body }, i) => (
               <AnimateOnScroll key={title} delay={i * 0.07} className="h-full">
                 <div className="h-full bg-white p-8 group hover:bg-[#1A1A1A] transition-colors duration-300">
-                  <div className="text-[#C85A0A] mb-5">{icon}</div>
+                  <div className="text-[#CC6633] mb-5">{icon}</div>
                   <h3 className="font-display font-black uppercase text-lg text-[#1A1A1A] group-hover:text-white mb-3 transition-colors">
                     {title}
                   </h3>
@@ -397,7 +397,7 @@ export default function BrandWithUs() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left: content */}
             <AnimateOnScroll>
-              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
                 Hands-On Training
               </p>
               <h2 className="font-display font-black text-white uppercase leading-tight text-4xl lg:text-5xl mb-8">
@@ -410,7 +410,7 @@ export default function BrandWithUs() {
               </p>
 
               <div className="space-y-6 mb-10">
-                <div className="border-l-2 border-[#C85A0A] pl-6">
+                <div className="border-l-2 border-[#CC6633] pl-6">
                   <h4 className="font-display font-bold uppercase text-white text-sm tracking-widest mb-2">
                     Day 1 — The Model
                   </h4>
@@ -419,7 +419,7 @@ export default function BrandWithUs() {
                     specs, financing strategies, and the economics of the product type.
                   </p>
                 </div>
-                <div className="border-l-2 border-[#C85A0A] pl-6">
+                <div className="border-l-2 border-[#CC6633] pl-6">
                   <h4 className="font-display font-bold uppercase text-white text-sm tracking-widest mb-2">
                     Day 2 — The Execution
                   </h4>
@@ -432,7 +432,7 @@ export default function BrandWithUs() {
 
               <a
                 href="#contact"
-                className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#C85A0A] text-white px-8 py-3.5 hover:bg-[#A84808] transition-colors"
+                className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#CC6633] text-white px-8 py-3.5 hover:bg-[#A85228] transition-colors"
               >
                 Get Event Info
               </a>
@@ -459,7 +459,7 @@ export default function BrandWithUs() {
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             {/* Left: heading */}
             <AnimateOnScroll>
-              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
                 Start the Conversation
               </p>
               <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-tight text-4xl lg:text-5xl mb-6">
@@ -471,15 +471,15 @@ export default function BrandWithUs() {
               </p>
               <div className="space-y-4 text-sm text-[#1A1A1A]/55">
                 <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#C85A0A]" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#CC6633]" />
                   Response within 24–48 hours
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#C85A0A]" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#CC6633]" />
                   No hard sell — just a real conversation
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#C85A0A]" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#CC6633]" />
                   Kevin Combs, CCIM — personally
                 </div>
               </div>
@@ -516,7 +516,7 @@ export default function BrandWithUs() {
                         value={form.name}
                         onChange={handleChange}
                         placeholder="John Smith"
-                        className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:outline-none focus:border-[#C85A0A] transition-colors"
+                        className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:outline-none focus:border-[#CC6633] transition-colors"
                       />
                     </div>
                     <div>
@@ -530,7 +530,7 @@ export default function BrandWithUs() {
                         value={form.email}
                         onChange={handleChange}
                         placeholder="john@example.com"
-                        className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:outline-none focus:border-[#C85A0A] transition-colors"
+                        className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:outline-none focus:border-[#CC6633] transition-colors"
                       />
                     </div>
                   </div>
@@ -545,7 +545,7 @@ export default function BrandWithUs() {
                       value={form.market}
                       onChange={handleChange}
                       placeholder="e.g. Nashville, TN or Denver, CO"
-                      className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:outline-none focus:border-[#C85A0A] transition-colors"
+                      className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:outline-none focus:border-[#CC6633] transition-colors"
                     />
                   </div>
                   <div>
@@ -558,12 +558,12 @@ export default function BrandWithUs() {
                       value={form.message}
                       onChange={handleChange}
                       placeholder="Tell Kevin what you're working with — land you're evaluating, stage you're at, what you want to know..."
-                      className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:outline-none focus:border-[#C85A0A] transition-colors resize-none"
+                      className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:outline-none focus:border-[#CC6633] transition-colors resize-none"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full font-display font-bold uppercase tracking-wider text-sm bg-[#C85A0A] text-white py-4 hover:bg-[#A84808] transition-colors"
+                    className="w-full font-display font-bold uppercase tracking-wider text-sm bg-[#CC6633] text-white py-4 hover:bg-[#A85228] transition-colors"
                   >
                     Send Message
                   </button>

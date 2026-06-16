@@ -39,7 +39,7 @@ export default function About() {
       <section className="bg-[#1A1A1A] pt-40 pb-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.22em] text-[#C85A0A] text-xs mb-4">
+            <p className="font-display font-bold uppercase tracking-[0.22em] text-[#CC6633] text-xs mb-4">
               The Founder
             </p>
             <h1 className="font-display font-black text-white uppercase leading-none text-[clamp(3rem,8vw,6.5rem)]">
@@ -67,7 +67,7 @@ export default function About() {
               <div className="grid grid-cols-4 gap-px bg-[#1A1A1A]/10 mt-px">
                 {stats.map(({ value, label }) => (
                   <div key={label} className="bg-[#F7F6F4] py-5 px-4 text-center">
-                    <div className="font-display font-black text-[#C85A0A] text-2xl leading-none">{value}</div>
+                    <div className="font-display font-black text-[#CC6633] text-2xl leading-none">{value}</div>
                     <div className="text-[#1A1A1A]/50 text-[10px] uppercase tracking-widest mt-1 font-display font-semibold">{label}</div>
                   </div>
                 ))}
@@ -76,7 +76,7 @@ export default function About() {
 
             {/* Bio */}
             <AnimateOnScroll delay={0.1}>
-              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
                 Kevin Combs, CCIM
               </p>
               <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-tight text-4xl lg:text-5xl mb-8">
@@ -110,7 +110,7 @@ export default function About() {
               <div className="mt-10">
                 <Link
                   to="/development-services"
-                  className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#C85A0A] text-white px-8 py-3.5 hover:bg-[#A84808] transition-colors"
+                  className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#CC6633] text-white px-8 py-3.5 hover:bg-[#A85228] transition-colors"
                 >
                   Work With Kevin
                 </Link>
@@ -124,7 +124,7 @@ export default function About() {
       <section className="bg-[#1A1A1A] py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
               Knowledge Transfer
             </p>
             <h2 className="font-display font-black text-white uppercase leading-none text-5xl lg:text-6xl mb-14">
@@ -134,9 +134,9 @@ export default function About() {
           <div className="grid md:grid-cols-3 gap-px bg-white/10">
             {offerings.map(({ title, desc }, i) => (
               <AnimateOnScroll key={title} delay={i * 0.1}>
-                <div className="p-10 lg:p-12 bg-[#1A1A1A] border border-white/10 hover:border-[#C85A0A]/60 transition-colors group">
-                  <div className="w-8 h-0.5 bg-[#C85A0A] mb-6" />
-                  <h3 className="font-display font-black uppercase text-xl text-white mb-4 group-hover:text-[#C85A0A] transition-colors">
+                <div className="p-10 lg:p-12 bg-[#1A1A1A] border border-white/10 hover:border-[#CC6633]/60 transition-colors group">
+                  <div className="w-8 h-0.5 bg-[#CC6633] mb-6" />
+                  <h3 className="font-display font-black uppercase text-xl text-white mb-4 group-hover:text-[#CC6633] transition-colors">
                     {title}
                   </h3>
                   <p className="text-white/55 text-sm leading-relaxed">
@@ -150,7 +150,7 @@ export default function About() {
             <div className="mt-10 text-center lg:text-left">
               <Link
                 to="/development-services"
-                className="inline-block font-display font-bold uppercase tracking-wider text-sm border-2 border-[#C85A0A] text-[#C85A0A] px-8 py-3.5 hover:bg-[#C85A0A] hover:text-white transition-colors"
+                className="inline-block font-display font-bold uppercase tracking-wider text-sm border-2 border-[#CC6633] text-[#CC6633] px-8 py-3.5 hover:bg-[#CC6633] hover:text-white transition-colors"
               >
                 View All Offerings →
               </Link>
@@ -163,7 +163,7 @@ export default function About() {
       <section className="bg-[#F7F6F4] py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
-            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
               See It in Action
             </p>
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-4xl lg:text-5xl mb-12">
@@ -173,7 +173,7 @@ export default function About() {
           <AnimateOnScroll delay={0.1}>
             <div className="relative bg-[#1A1A1A] aspect-video flex items-center justify-center group cursor-pointer max-w-4xl">
               {/* Play button */}
-              <div className="w-20 h-20 rounded-full bg-[#C85A0A] flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
+              <div className="w-20 h-20 rounded-full bg-[#CC6633] flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
                 <svg className="w-7 h-7 text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z" />
                 </svg>
@@ -187,7 +187,7 @@ export default function About() {
       </section>
 
       {/* ── CTA BAND ─────────────────────────────────────────── */}
-      <section className="bg-[#C85A0A] py-20">
+      <section className="bg-[#CC6633] py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
             <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
@@ -201,7 +201,7 @@ export default function About() {
               </div>
               <Link
                 to="/development-services"
-                className="flex-shrink-0 inline-block font-display font-bold uppercase tracking-wider text-sm bg-white text-[#C85A0A] px-10 py-4 hover:bg-[#1A1A1A] hover:text-white transition-colors"
+                className="flex-shrink-0 inline-block font-display font-bold uppercase tracking-wider text-sm bg-white text-[#CC6633] px-10 py-4 hover:bg-[#1A1A1A] hover:text-white transition-colors"
               >
                 Development Consulting →
               </Link>

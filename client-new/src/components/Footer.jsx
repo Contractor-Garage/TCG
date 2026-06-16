@@ -17,7 +17,7 @@ export default function Footer() {
               Large-bay industrial workspace for contractors, tradespeople, and small business owners.
               Built different. Built right.
             </p>
-            <p className="mt-4 text-[#C85A0A] font-display font-bold uppercase tracking-widest text-xs">
+            <p className="mt-4 text-[#CC6633] font-display font-bold uppercase tracking-widest text-xs">
               The Original Since 2008
             </p>
           </div>
@@ -78,7 +78,7 @@ export default function Footer() {
               <li>
                 <Link
                   to="/development-services"
-                  className="text-[#C85A0A] hover:text-[#E06B1A] font-semibold transition-colors"
+                  className="text-[#CC6633] hover:text-[#D97A4D] font-semibold transition-colors"
                 >
                   Talk to Kevin →
                 </Link>
