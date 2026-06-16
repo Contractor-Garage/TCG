@@ -126,7 +126,9 @@ export default function BrandWithUs() {
           </div>
           <div className="flex gap-3">
             <a
-              href="#"
+              href="https://open.spotify.com/episode/4kDKGfgYw4M9CHObCPEnY8"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 font-display font-bold uppercase tracking-wider text-xs bg-[#1DB954] text-white px-5 py-2.5 hover:opacity-90 transition-opacity"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -135,7 +137,9 @@ export default function BrandWithUs() {
               Spotify
             </a>
             <a
-              href="#"
+              href="https://podcasts.apple.com/us/podcast/e14-kevin-combs-contractor-garages/id1740211062?i=1000670826834"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 font-display font-bold uppercase tracking-wider text-xs bg-[#872EC4] text-white px-5 py-2.5 hover:opacity-90 transition-opacity"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -265,6 +269,96 @@ export default function BrandWithUs() {
               ✦ This is a brand license, not a franchise. No royalties, no territory exclusivity, no corporate overhead.
             </p>
           </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* ── ONLINE COURSE ────────────────────────────────────── */}
+      <section className="bg-[#1A1A1A] py-24">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left: content */}
+            <AnimateOnScroll>
+              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#C85A0A] text-xs mb-4">
+                Self-Paced Learning
+              </p>
+              <h2 className="font-display font-black text-white uppercase leading-tight text-4xl lg:text-5xl mb-6">
+                Online Course
+              </h2>
+              <p className="text-white/60 leading-relaxed mb-8">
+                Can't make it to Kansas City? Kevin's 5-part online course covers the entire
+                Contractor Garage model from site selection through lease-up — at your own pace,
+                on your own schedule.
+              </p>
+
+              <div className="space-y-3 mb-8">
+                {[
+                  { num: '01', title: 'Market Analysis & Site Selection', desc: 'How to identify the right market, evaluate sites, and assess demand before you commit.' },
+                  { num: '02', title: 'Construction Specs & Cost Control', desc: 'What to build, what to skip, and how to hit the numbers that make the model work.' },
+                  { num: '03', title: 'Zoning, Permitting & Legal Basics', desc: 'Navigate approvals without an attorney on retainer — what you need to know.' },
+                  { num: '04', title: 'Lease-Up Strategy', desc: 'Pre-leasing tactics, tenant screening, and how to fill units before you open the doors.' },
+                  { num: '05', title: 'Scaling to Multiple Locations', desc: 'Operations, management systems, and how Kevin built 10+ projects across one metro.' },
+                ].map(({ num, title, desc }) => (
+                  <div key={num} className="flex gap-4 group">
+                    <span className="font-display font-black text-[#C85A0A] text-xs w-6 flex-shrink-0 mt-0.5">{num}</span>
+                    <div>
+                      <p className="font-display font-bold uppercase text-white text-sm tracking-wide">{title}</p>
+                      <p className="text-white/40 text-xs leading-relaxed mt-0.5">{desc}</p>
+                    </div>
+                  </div>
+                ))}
+                <div className="flex gap-4 border-t border-white/10 pt-3 mt-2">
+                  <span className="font-display font-black text-[#C85A0A] text-xs w-6 flex-shrink-0 mt-0.5">★</span>
+                  <div>
+                    <p className="font-display font-bold uppercase text-white text-sm tracking-wide">Bonus: The Banker Video</p>
+                    <p className="text-white/40 text-xs leading-relaxed mt-0.5">How Kevin finances these projects — what lenders look for and how to structure the deal.</p>
+                  </div>
+                </div>
+              </div>
+
+              <a
+                href="#contact"
+                className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#C85A0A] text-white px-8 py-3.5 hover:bg-[#A84808] transition-colors"
+              >
+                Get Course Access →
+              </a>
+            </AnimateOnScroll>
+
+            {/* Right: video embed placeholder */}
+            <AnimateOnScroll delay={0.1} direction="left">
+              {/* TODO: Replace href with actual Teachable course URL when available */}
+              <div className="relative bg-[#0D0D0D] aspect-video flex items-center justify-center group cursor-pointer border border-white/10">
+                <div className="w-20 h-20 rounded-full bg-[#C85A0A] flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
+                  <svg className="w-7 h-7 text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+                <div className="absolute top-5 left-6">
+                  <p className="text-white/25 font-display font-bold uppercase tracking-widest text-xs">Course Preview</p>
+                </div>
+                <div className="absolute bottom-5 left-6 right-6">
+                  <p className="text-white/30 font-display font-semibold uppercase tracking-widest text-xs">
+                    {/* TODO: Replace with actual Teachable embed or YouTube intro video */}
+                    Video — Coming Soon
+                  </p>
+                </div>
+              </div>
+              <div className="bg-[#0D0D0D] border border-white/10 border-t-0 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-white/40 font-display font-bold uppercase tracking-widest text-xs mb-1">Available On</p>
+                    <p className="text-white font-display font-black uppercase text-lg">Teachable</p>
+                  </div>
+                  <a
+                    href="#contact"
+                    className="font-display font-bold uppercase tracking-wider text-xs text-[#C85A0A] border border-[#C85A0A] px-4 py-2 hover:bg-[#C85A0A] hover:text-white transition-colors"
+                  >
+                    {/* TODO: Replace href="#contact" with direct Teachable course URL */}
+                    Enroll →
+                  </a>
+                </div>
+              </div>
+            </AnimateOnScroll>
+          </div>
         </div>
       </section>
 

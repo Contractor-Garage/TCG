@@ -12,9 +12,9 @@ import Logo from './Logo'
 
 const links = [
   { label: 'Home', to: '/' },
-  { label: 'About', to: '/about' },
-  { label: 'Locations', to: '/locations' },
-  { label: 'Development Consulting', to: '/brand-with-us', cta: true },
+  { label: 'About', to: '/about-us' },
+  { label: 'Locations', to: '/directory' },
+  { label: 'Development Consulting', to: '/development-services', cta: true },
 ]
 
 export default function Nav() {

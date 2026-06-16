@@ -109,7 +109,7 @@ export default function About() {
               </div>
               <div className="mt-10">
                 <Link
-                  to="/brand-with-us"
+                  to="/development-services"
                   className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#C85A0A] text-white px-8 py-3.5 hover:bg-[#A84808] transition-colors"
                 >
                   Work With Kevin
@@ -149,7 +149,7 @@ export default function About() {
           <AnimateOnScroll delay={0.2}>
             <div className="mt-10 text-center lg:text-left">
               <Link
-                to="/brand-with-us"
+                to="/development-services"
                 className="inline-block font-display font-bold uppercase tracking-wider text-sm border-2 border-[#C85A0A] text-[#C85A0A] px-8 py-3.5 hover:bg-[#C85A0A] hover:text-white transition-colors"
               >
                 View All Offerings →
@@ -200,7 +200,7 @@ export default function About() {
                 </h2>
               </div>
               <Link
-                to="/brand-with-us"
+                to="/development-services"
                 className="flex-shrink-0 inline-block font-display font-bold uppercase tracking-wider text-sm bg-white text-[#C85A0A] px-10 py-4 hover:bg-[#1A1A1A] hover:text-white transition-colors"
               >
                 Development Consulting →

@@ -131,13 +131,13 @@ export default function Home() {
             className="flex flex-wrap gap-4"
           >
             <Link
-              to="/locations"
+              to="/directory"
               className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#C85A0A] text-white px-8 py-3.5 hover:bg-[#A84808] transition-colors"
             >
               Find a Location
             </Link>
             <Link
-              to="/brand-with-us"
+              to="/development-services"
               className="inline-block font-display font-bold uppercase tracking-wider text-sm border-2 border-white text-white px-8 py-3.5 hover:bg-white hover:text-[#1A1A1A] transition-colors"
             >
               Developer Consulting →
@@ -204,7 +204,7 @@ export default function Home() {
                   and less expensive than flex space. Far more functional than storage.
                 </p>
                 <Link
-                  to="/about"
+                  to="/about-us"
                   className="inline-block font-display font-bold uppercase tracking-wider text-sm text-[#C85A0A] border-b-2 border-[#C85A0A] pb-0.5 hover:text-[#A84808] hover:border-[#A84808] transition-colors"
                 >
                   About the Founder →
@@ -298,7 +298,7 @@ export default function Home() {
                 </h2>
               </div>
               <Link
-                to="/brand-with-us"
+                to="/development-services"
                 className="flex-shrink-0 inline-block font-display font-bold uppercase tracking-wider text-sm bg-white text-[#C85A0A] px-10 py-4 hover:bg-[#1A1A1A] hover:text-white transition-colors"
               >
                 See How It Works →

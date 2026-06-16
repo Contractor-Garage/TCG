@@ -30,9 +30,10 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { label: 'Home', to: '/' },
-                { label: 'About Kevin', to: '/about' },
-                { label: 'Locations', to: '/locations' },
-                { label: 'Development Consulting', to: '/brand-with-us' },
+                { label: 'About Kevin', to: '/about-us' },
+                { label: 'Locations', to: '/directory' },
+                { label: 'Development Consulting', to: '/development-services' },
+                { label: 'Privacy Policy', to: '/privacy-policy' },
               ].map(({ label, to }) => (
                 <li key={to}>
                   <Link
@@ -76,7 +77,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  to="/brand-with-us"
+                  to="/development-services"
                   className="text-[#C85A0A] hover:text-[#E06B1A] font-semibold transition-colors"
                 >
                   Talk to Kevin →
