@@ -1,16 +1,8 @@
-/*
-  Locations — full list of all Contractor Garage™ locations with availability status.
-  Sections: Hero → Availability banner → Location table (desktop) / cards (mobile) → Developer CTA.
-
-  Location data is imported from src/data/locations.js (shared with LocationDetail).
-  Each row/card links to /location/:slug.
-
-  TODO: integrate a Leaflet map showing pin locations (lat/lng not yet in the data array).
-*/
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import AnimateOnScroll from '../components/AnimateOnScroll'
+import { API } from '../util/API'
 import locationImage from '../assets/location.jpg'
-import { locations } from '../data/locations'
 
 const statusConfig = {
   Available: {
@@ -30,12 +22,75 @@ const statusConfig = {
   },
 }
 
+function getLocationStatus(location) {
+  const hasAvailable = location.units?.some((u) => u.available)
+  return hasAvailable ? 'Available' : 'Full'
+}
+
 export default function Locations() {
-  const available = locations.filter((l) => l.status === 'Available')
+  const [locations, setLocations] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    API.getAllLocations()
+      .then((data) => {
+        setLocations(data)
+        setLoading(false)
+      })
+      .catch(() => {
+        setError('Unable to load locations. Please try again later.')
+        setLoading(false)
+      })
+  }, [])
+
+  const available = locations.filter((l) => getLocationStatus(l) === 'Available')
+
+  if (loading) {
+    return (
+      <main>
+        <section className="bg-[#1A1A1A] pt-40 pb-24">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <div className="animate-pulse space-y-4">
+              <div className="h-4 w-32 bg-white/10 rounded" />
+              <div className="h-16 w-80 bg-white/10 rounded" />
+            </div>
+          </div>
+        </section>
+        <section className="bg-[#F7F6F4] py-24">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <div className="animate-pulse space-y-3">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="h-16 bg-white border border-[#1A1A1A]/10 rounded" />
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
+  if (error) {
+    return (
+      <main>
+        <section className="bg-[#1A1A1A] pt-40 pb-24">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <p className="font-display font-bold uppercase tracking-[0.22em] text-[#CC6633] text-xs mb-4">
+              Locations
+            </p>
+            <h1 className="font-display font-black text-white uppercase leading-none text-4xl mb-6">
+              Something went wrong
+            </h1>
+            <p className="text-white/60 text-sm">{error}</p>
+          </div>
+        </section>
+      </main>
+    )
+  }
 
   return (
     <main>
-      {/* ── HERO ─────────────────────────────────────────────── */}
+      {/* HERO */}
       <section
         className="relative pt-40 pb-24"
         style={{
@@ -57,22 +112,24 @@ export default function Locations() {
         </div>
       </section>
 
-      {/* ── AVAILABILITY BANNER ──────────────────────────────── */}
-      <div className="bg-[#CC6633] py-4">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse flex-shrink-0" />
-            <p className="font-display font-bold uppercase tracking-widest text-white text-sm">
-              Several locations currently have units available
+      {/* AVAILABILITY BANNER */}
+      {available.length > 0 && (
+        <div className="bg-[#CC6633] py-4">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse flex-shrink-0" />
+              <p className="font-display font-bold uppercase tracking-widest text-white text-sm">
+                Several locations currently have units available
+              </p>
+            </div>
+            <p className="text-white/75 font-display font-semibold uppercase tracking-wider text-xs">
+              {available.length} location{available.length !== 1 ? 's' : ''} open now
             </p>
           </div>
-          <p className="text-white/75 font-display font-semibold uppercase tracking-wider text-xs">
-            {available.length} locations open now
-          </p>
         </div>
-      </div>
+      )}
 
-      {/* ── LOCATION LIST ────────────────────────────────────── */}
+      {/* LOCATION LIST */}
       <section className="bg-[#F7F6F4] py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
@@ -87,7 +144,6 @@ export default function Locations() {
           {/* Desktop table */}
           <div className="hidden md:block">
             <div className="bg-white border border-[#1A1A1A]/10 overflow-hidden">
-              {/* Table header */}
               <div className="grid grid-cols-12 bg-[#1A1A1A] px-8 py-4">
                 <div className="col-span-3 font-display font-bold uppercase tracking-widest text-white/50 text-xs">
                   Location
@@ -102,25 +158,25 @@ export default function Locations() {
                   Status
                 </div>
               </div>
-              {/* Rows */}
-              {locations.map(({ slug, name, address, city, state, status }, i) => {
+              {locations.map((location, i) => {
+                const status = getLocationStatus(location)
                 const cfg = statusConfig[status]
                 return (
-                  <AnimateOnScroll key={slug} delay={i * 0.03}>
+                  <AnimateOnScroll key={location._id} delay={i * 0.03}>
                     <Link
-                      to={`/location/${slug}`}
+                      to={`/location/${location.slug}`}
                       className={`grid grid-cols-12 px-8 py-5 border-t border-[#1A1A1A]/8 hover:bg-[#F7F6F4] transition-colors group ${
                         status === 'Available' ? 'bg-green-50/40' : ''
                       }`}
                     >
                       <div className="col-span-3 font-display font-bold text-[#1A1A1A] text-sm uppercase tracking-wide group-hover:text-[#CC6633] transition-colors">
-                        {name}
+                        {location.name}
                       </div>
                       <div className="col-span-5 text-[#1A1A1A]/65 text-sm font-body">
-                        {address}
+                        {location.addressFirstLine}
                       </div>
                       <div className="col-span-2 text-[#1A1A1A]/65 text-sm font-body">
-                        {city}, {state}
+                        {location.addressSecondLine}
                       </div>
                       <div className="col-span-2 flex justify-end">
                         <span
@@ -139,19 +195,20 @@ export default function Locations() {
 
           {/* Mobile cards */}
           <div className="md:hidden space-y-3">
-            {locations.map(({ slug, name, address, city, state, status }, i) => {
+            {locations.map((location, i) => {
+              const status = getLocationStatus(location)
               const cfg = statusConfig[status]
               return (
-                <AnimateOnScroll key={slug} delay={i * 0.04}>
+                <AnimateOnScroll key={location._id} delay={i * 0.04}>
                   <Link
-                    to={`/location/${slug}`}
+                    to={`/location/${location.slug}`}
                     className={`block bg-white p-5 border border-[#1A1A1A]/10 hover:border-[#CC6633]/40 transition-colors ${
                       status === 'Available' ? 'border-l-4 border-l-green-500' : ''
                     }`}
                   >
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <h3 className="font-display font-bold uppercase text-[#1A1A1A] text-base tracking-wide">
-                        {name}
+                        {location.name}
                       </h3>
                       <span
                         className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1 text-xs font-display font-bold uppercase tracking-wider ${cfg.badge}`}
@@ -161,7 +218,7 @@ export default function Locations() {
                       </span>
                     </div>
                     <p className="text-[#1A1A1A]/60 text-sm">
-                      {address}, {city}, {state}
+                      {location.addressFirstLine}, {location.addressSecondLine}
                     </p>
                   </Link>
                 </AnimateOnScroll>
@@ -183,7 +240,7 @@ export default function Locations() {
         </div>
       </section>
 
-      {/* ── DEVELOPER CALLOUT ────────────────────────────────── */}
+      {/* DEVELOPER CALLOUT */}
       <section className="bg-[#1A1A1A] py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
