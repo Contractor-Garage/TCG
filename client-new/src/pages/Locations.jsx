@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet'
 import MarkerCluster from '../components/MarkerCluster'
 import AnimateOnScroll from '../components/AnimateOnScroll'
+import usePageTitle from '../hooks/usePageTitle'
 import { useMapContext } from '../context/MapContext'
 import { API } from '../util/API'
 import locationImage from '../assets/location.jpg'
@@ -69,10 +70,13 @@ function getLocationStatus(location) {
 }
 
 export default function Locations() {
+  usePageTitle('Locations')
   const [mapState] = useMapContext()
   const [locations, setLocations] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState('all')
 
   useEffect(() => {
     API.getAllLocations()
@@ -87,6 +91,22 @@ export default function Locations() {
   }, [])
 
   const available = locations.filter((l) => getLocationStatus(l) === 'Available')
+
+  const filtered = useMemo(() => {
+    let result = locations
+    if (search.trim()) {
+      const q = search.toLowerCase()
+      result = result.filter(l =>
+        l.name?.toLowerCase().includes(q) ||
+        l.addressFirstLine?.toLowerCase().includes(q) ||
+        l.addressSecondLine?.toLowerCase().includes(q)
+      )
+    }
+    if (statusFilter !== 'all') {
+      result = result.filter(l => getLocationStatus(l) === statusFilter)
+    }
+    return result
+  }, [locations, search, statusFilter])
 
   if (loading) {
     return (
@@ -224,6 +244,26 @@ export default function Locations() {
             </p>
           </AnimateOnScroll>
 
+          {/* Search & Filter */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-10">
+            <input
+              type="text"
+              placeholder="Search locations..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="flex-1 px-4 py-3 border border-[#1A1A1A]/15 bg-white text-sm focus:outline-none focus:border-[#CC6633] transition-colors"
+            />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-4 py-3 border border-[#1A1A1A]/15 bg-white text-sm font-display font-bold uppercase tracking-wider focus:outline-none focus:border-[#CC6633] transition-colors"
+            >
+              <option value="all">All Statuses</option>
+              <option value="Available">Available</option>
+              <option value="Full">Full</option>
+            </select>
+          </div>
+
           {/* Desktop table */}
           <div className="hidden md:block">
             <div className="bg-white border border-[#1A1A1A]/10 overflow-hidden">
@@ -241,7 +281,7 @@ export default function Locations() {
                   Status
                 </div>
               </div>
-              {locations.map((location, i) => {
+              {filtered.map((location, i) => {
                 const status = getLocationStatus(location)
                 const cfg = statusConfig[status]
                 return (
@@ -278,7 +318,7 @@ export default function Locations() {
 
           {/* Mobile cards */}
           <div className="md:hidden space-y-3">
-            {locations.map((location, i) => {
+            {filtered.map((location, i) => {
               const status = getLocationStatus(location)
               const cfg = statusConfig[status]
               return (

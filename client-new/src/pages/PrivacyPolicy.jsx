@@ -3,6 +3,7 @@
 */
 import { Link } from 'react-router-dom'
 import AnimateOnScroll from '../components/AnimateOnScroll'
+import usePageTitle from '../hooks/usePageTitle'
 
 const sections = [
   {
@@ -32,6 +33,7 @@ const sections = [
 ]
 
 export default function PrivacyPolicy() {
+  usePageTitle('Privacy Policy')
   return (
     <main>
       {/* ── HERO ─────────────────────────────────────────────── */}

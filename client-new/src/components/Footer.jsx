@@ -34,6 +34,7 @@ export default function Footer() {
                 { label: 'Locations', to: '/directory' },
                 { label: 'Development Consulting', to: '/development-services' },
                 { label: 'Privacy Policy', to: '/privacy-policy' },
+                { label: 'Terms of Service', to: '/terms-of-service' },
               ].map(({ label, to }) => (
                 <li key={to}>
                   <Link

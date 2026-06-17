@@ -10,6 +10,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import AnimateOnScroll from '../components/AnimateOnScroll'
+import usePageTitle from '../hooks/usePageTitle'
 import heroImage from '../assets/hero.jpg'
 import locationImage from '../assets/location.jpg'
 
@@ -82,6 +83,7 @@ const whyCards = [
 ]
 
 export default function Home() {
+  usePageTitle('')
   return (
     <main>
       {/* ── HERO ─────────────────────────────────────────────── */}

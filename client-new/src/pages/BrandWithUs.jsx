@@ -9,6 +9,7 @@
 */
 import { useState } from 'react'
 import AnimateOnScroll from '../components/AnimateOnScroll'
+import usePageTitle from '../hooks/usePageTitle'
 import presentingImage from '../assets/presenting.png'
 
 const consultingFeatures = [
@@ -69,6 +70,7 @@ const investmentCase = [
 ]
 
 export default function BrandWithUs() {
+  usePageTitle('Development Consulting')
   const [form, setForm] = useState({ name: '', email: '', market: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
 

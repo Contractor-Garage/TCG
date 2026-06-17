@@ -9,6 +9,7 @@
 import { Link } from 'react-router-dom'
 import ReactPlayer from 'react-player/file'
 import AnimateOnScroll from '../components/AnimateOnScroll'
+import usePageTitle from '../hooks/usePageTitle'
 import kevinImage from '../assets/kevin.jpg'
 
 const stats = [
@@ -34,6 +35,7 @@ const offerings = [
 ]
 
 export default function About() {
+  usePageTitle('About Kevin Combs')
   return (
     <main>
       {/* ── HERO ─────────────────────────────────────────────── */}
