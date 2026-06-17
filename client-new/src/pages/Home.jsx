@@ -10,7 +10,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import AnimateOnScroll from '../components/AnimateOnScroll'
-import usePageTitle from '../hooks/usePageTitle'
+import useMetaTags from '../hooks/useMetaTags'
 import heroImage from '../assets/hero.jpg'
 import locationImage from '../assets/location.jpg'
 
@@ -83,7 +83,9 @@ const whyCards = [
 ]
 
 export default function Home() {
-  usePageTitle('')
+  useMetaTags({
+    description: 'Large-bay industrial workspace for contractors, tradespeople, and small business owners. The original since 2008, Kansas City.',
+  })
   return (
     <main>
       {/* ── HERO ─────────────────────────────────────────────── */}

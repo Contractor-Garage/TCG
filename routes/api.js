@@ -5,7 +5,7 @@ const Preview = require('../db/schemas/Preview');
 const User = require('../db/schemas/User');
 const Honeypot = require('../db/schemas/Honeypot');
 const { transporter } = require('../services/mailer');
-const { buildSeminarSignupEmail } = require('../services/emailTemplates');
+const { buildSeminarSignupEmail, buildContactEmail } = require('../services/emailTemplates');
 
 /*
 *          !!##########################!!
@@ -140,6 +140,36 @@ router.post('/seminar/sign-up', (req, res, next) => {
         'amcnulty88@swbell.net',
       ],
       subject: 'New Seminar Signup',
+      html: emailHtml,
+    }).then(() => {
+      res.status(200).send();
+    }).catch(next);
+  }
+})
+
+router.post('/contact', (req, res, next) => {
+  if (req.body && req.body.username) {
+    const honeypot = new Honeypot({
+      timestamp: new Date().toLocaleString(),
+      requestData: JSON.stringify(req.body)
+    });
+    honeypot.save()
+      .then(() => res.status(200).send('message sent'))
+      .catch(() => res.status(200).send('message sent'));
+  } else {
+    const emailHtml = buildContactEmail(req.body);
+
+    transporter.sendMail({
+      from: '"Contractor Garage Website" <webmaster@contractorgarage.com>',
+      to: [
+        'kevin.combs@contractorgarage.com',
+        'kcombs@insightcommercial.net',
+      ],
+      bcc: [
+        'aaron.mcnulty@contractorgarage.com',
+        'amcnulty88@swbell.net',
+      ],
+      subject: 'New Contact Form Submission',
       html: emailHtml,
     }).then(() => {
       res.status(200).send();

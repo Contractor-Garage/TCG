@@ -51,7 +51,7 @@ export default function Nav() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-2">
+          <nav aria-label="Main navigation" className="hidden md:flex items-center gap-2">
             {links.map(({ label, to, cta }) => {
               const active = isActive(to)
               if (cta) {
@@ -116,7 +116,7 @@ export default function Nav() {
           mobileOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <nav className="flex flex-col py-4 px-6 gap-1">
+        <nav aria-label="Mobile navigation" className="flex flex-col py-4 px-6 gap-1">
           {links.map(({ label, to, cta }) => (
             <Link
               key={to}

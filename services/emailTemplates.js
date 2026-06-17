@@ -80,4 +80,58 @@ function buildSeminarSignupEmail(data) {
   `;
 }
 
-module.exports = { buildSeminarSignupEmail };
+function buildContactEmail(data) {
+  const name = escapeHtml(data.name);
+  const email = escapeHtml(data.email);
+  const market = escapeHtml(data.market);
+  const message = escapeHtml(data.message);
+
+  return `
+  <html>
+    <head>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 20px;
+          background-color: #f5f5f5;
+        }
+        .container {
+          max-width: 600px;
+          margin: 0 auto;
+          background-color: #ffffff;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 { color: #333; }
+        p { margin: 10px 0; color: #555; }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+        }
+        th, td {
+          border: 1px solid #ddd;
+          padding: 10px;
+          text-align: left;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h2>New Contact Form Submission</h2>
+        <table>
+          <tr><th>Field</th><th>Value</th></tr>
+          <tr><td>Name</td><td>${name}</td></tr>
+          <tr><td>Email</td><td>${email}</td></tr>
+          <tr><td>Market (City)</td><td>${market}</td></tr>
+          <tr><td>Message</td><td>${message}</td></tr>
+        </table>
+      </div>
+    </body>
+  </html>
+  `;
+}
+
+module.exports = { buildSeminarSignupEmail, buildContactEmail };

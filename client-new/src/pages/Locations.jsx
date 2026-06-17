@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet'
 import MarkerCluster from '../components/MarkerCluster'
 import AnimateOnScroll from '../components/AnimateOnScroll'
-import usePageTitle from '../hooks/usePageTitle'
+import useMetaTags from '../hooks/useMetaTags'
 import { useMapContext } from '../context/MapContext'
 import { API } from '../util/API'
 import locationImage from '../assets/location.jpg'
@@ -70,7 +70,10 @@ function getLocationStatus(location) {
 }
 
 export default function Locations() {
-  usePageTitle('Locations')
+  useMetaTags({
+    title: 'Locations',
+    description: 'Find Contractor Garage™ locations across the US. Interactive map, unit availability, and contact info for each location.',
+  })
   const [mapState] = useMapContext()
   const [locations, setLocations] = useState([])
   const [loading, setLoading] = useState(true)

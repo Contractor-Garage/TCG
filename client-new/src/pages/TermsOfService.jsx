@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import AnimateOnScroll from '../components/AnimateOnScroll'
-import usePageTitle from '../hooks/usePageTitle'
+import useMetaTags from '../hooks/useMetaTags'
 
 const sections = [
   {
@@ -42,7 +42,10 @@ const sections = [
 ]
 
 export default function TermsOfService() {
-  usePageTitle('Terms of Service')
+  useMetaTags({
+    title: 'Terms of Service',
+    description: 'Terms of Service for contractorgarage.com — usage terms, intellectual property, liability, and governing law.',
+  })
 
   return (
     <main>
