@@ -1,8 +1,49 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet'
+import MarkerCluster from '../components/MarkerCluster'
 import AnimateOnScroll from '../components/AnimateOnScroll'
+import { useMapContext } from '../context/MapContext'
 import { API } from '../util/API'
 import locationImage from '../assets/location.jpg'
+
+function MapEventHandler() {
+  const [, dispatch] = useMapContext()
+  useMapEvents({
+    zoomend: (e) => {
+      const map = e.target
+      dispatch({ type: 'UPDATE_MAP', payload: { zoom: map.getZoom(), center: [map.getCenter().lat, map.getCenter().lng] } })
+    },
+    moveend: (e) => {
+      const map = e.target
+      dispatch({ type: 'UPDATE_MAP', payload: { zoom: map.getZoom(), center: [map.getCenter().lat, map.getCenter().lng] } })
+    },
+  })
+  return null
+}
+
+function LocationMarkers({ locations }) {
+  const markers = useMemo(() =>
+    locations
+      .filter(l => l.coordinates?.length === 2)
+      .map(location => ({
+        position: location.coordinates,
+        popup: `
+          <div style="font-size:13px;max-width:220px">
+            <strong style="display:block;margin-bottom:4px">${location.name}</strong>
+            ${location.units?.some(u => u.available) ? '<span style="background:#22c55e;color:#fff;font-size:11px;font-weight:bold;padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:4px">Units Available</span>' : ''}
+            <span style="color:#666;display:block">${location.addressFirstLine || ''}</span>
+            <span style="color:#666;display:block;margin-bottom:6px">${location.addressSecondLine || ''}</span>
+            ${location.thumbnailImage ? `<img src="${location.thumbnailImage.src}" alt="${location.thumbnailImage.alt || ''}" style="width:100%;border-radius:4px;margin-bottom:6px"/>` : ''}
+            <a href="/location/${location.slug}" style="color:#CC6633;font-weight:bold;font-size:12px;text-decoration:none">View Location →</a>
+          </div>
+        `,
+      })),
+    [locations]
+  )
+
+  return <MarkerCluster markers={markers} />
+}
 
 const statusConfig = {
   Available: {
@@ -28,6 +69,7 @@ function getLocationStatus(location) {
 }
 
 export default function Locations() {
+  const [mapState] = useMapContext()
   const [locations, setLocations] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -128,6 +170,47 @@ export default function Locations() {
           </div>
         </div>
       )}
+
+      {/* MAP */}
+      <section className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <AnimateOnScroll>
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
+              Explore
+            </p>
+            <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-4">
+              Find a Location
+            </h2>
+            <p className="text-[#1A1A1A]/55 text-sm mb-8">
+              Interact with the map and click on markers to see more information about a specific location.
+            </p>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={0.1}>
+            <div className="w-full border border-[#1A1A1A]/10 overflow-hidden" style={{ height: '75vh', minHeight: '500px' }}>
+              <MapContainer
+                center={mapState.center}
+                zoom={mapState.zoom}
+                scrollWheelZoom={true}
+                tap={false}
+                style={{ width: '100%', height: '100%' }}
+              >
+                <MapEventHandler />
+                <TileLayer
+                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  opacity={mapState.zoom <= 7 ? 1 : 0}
+                />
+                <TileLayer
+                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+                  opacity={mapState.zoom > 7 ? 1 : 0}
+                />
+                <LocationMarkers locations={locations} />
+              </MapContainer>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
 
       {/* LOCATION LIST */}
       <section className="bg-[#F7F6F4] py-24">

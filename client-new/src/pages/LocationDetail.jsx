@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import AnimateOnScroll from '../components/AnimateOnScroll'
 import useTextScramble from '../hooks/useTextScramble'
 import { API } from '../util/API'
@@ -80,9 +81,7 @@ export default function LocationDetail() {
   const hasAvailable = location.units?.some((u) => u.available)
   const status = hasAvailable ? 'Available' : 'Full'
   const fullAddress = [location.addressFirstLine, location.addressSecondLine].filter(Boolean).join(', ')
-  const mapSrc = location.coordinates?.length === 2
-    ? null
-    : `https://maps.google.com/maps?q=${encodeURIComponent(fullAddress)}&output=embed`
+  const hasCoordinates = location.coordinates?.length === 2
 
   const feePercent = location.paymentMarkupPercent || 0
   const feeFixed = location.paymentMarkupFixed || 0
@@ -199,7 +198,7 @@ export default function LocationDetail() {
       </section>
 
       {/* MAP */}
-      {mapSrc && (
+      {hasCoordinates && (
         <section className="bg-[#F7F6F4] py-16">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <AnimateOnScroll>
@@ -212,15 +211,23 @@ export default function LocationDetail() {
             </AnimateOnScroll>
             <AnimateOnScroll delay={0.1}>
               <div className="w-full aspect-video max-w-4xl border border-[#1A1A1A]/10 overflow-hidden">
-                <iframe
-                  title={`Map of ${location.name}`}
-                  src={mapSrc}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+                <MapContainer
+                  center={location.coordinates}
+                  zoom={15}
+                  scrollWheelZoom={false}
+                  dragging={false}
+                  zoomControl={false}
+                  doubleClickZoom={false}
+                  touchZoom={false}
+                  keyboard={false}
+                  attributionControl={false}
+                  style={{ width: '100%', height: '100%' }}
+                >
+                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                  <Marker position={location.coordinates}>
+                    <Popup>{location.name}<br />{fullAddress}</Popup>
+                  </Marker>
+                </MapContainer>
               </div>
               <p className="mt-3 text-[#1A1A1A]/40 text-xs font-body">{fullAddress}</p>
             </AnimateOnScroll>

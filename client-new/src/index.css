@@ -6,6 +6,10 @@
   full-width layout. These rules undo that.
 */
 
+@import 'leaflet/dist/leaflet.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -41,4 +45,8 @@
   .font-display {
     font-family: 'Barlow Condensed', sans-serif;
   }
+}
+
+.leaflet-container {
+  z-index: 0;
 }
