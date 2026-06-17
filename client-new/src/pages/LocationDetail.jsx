@@ -1,8 +1,11 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
-import { AnimatePresence, motion } from 'framer-motion'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import Carousel from 'react-gallery-carousel'
+import 'react-gallery-carousel/dist/index.css'
+import ReactPlayer from 'react-player/file'
 import AnimateOnScroll from '../components/AnimateOnScroll'
+import PayPalButton from '../components/PayPalButton'
 import useTextScramble from '../hooks/useTextScramble'
 import { API } from '../util/API'
 
@@ -14,11 +17,10 @@ export default function LocationDetail() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const [openVideoIndex, setOpenVideoIndex] = useState(null)
+  const [videoSectionExpanded, setVideoSectionExpanded] = useState(false)
   const [payModalOpen, setPayModalOpen] = useState(false)
   const [payAmount, setPayAmount] = useState('')
-  const [galleryIndex, setGalleryIndex] = useState(0)
-  const [galleryDirection, setGalleryDirection] = useState(1)
+  const [paymentApproved, setPaymentApproved] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -34,20 +36,7 @@ export default function LocationDetail() {
       })
   }, [slug])
 
-  const goTo = useCallback((idx, dir) => {
-    setGalleryDirection(dir)
-    setGalleryIndex(idx)
-  }, [])
-
   const galleryImages = location?.detailPageImages || []
-  const prev = () => goTo((galleryIndex - 1 + galleryImages.length) % galleryImages.length, -1)
-  const next = useCallback(() => goTo((galleryIndex + 1) % galleryImages.length, 1), [galleryIndex, galleryImages.length, goTo])
-
-  useEffect(() => {
-    if (galleryImages.length < 2) return
-    const t = setInterval(next, 4000)
-    return () => clearInterval(t)
-  }, [next, galleryImages.length])
 
   if (loading) {
     return (
@@ -85,9 +74,9 @@ export default function LocationDetail() {
 
   const feePercent = location.paymentMarkupPercent || 0
   const feeFixed = location.paymentMarkupFixed || 0
-  const payTotal = payAmount
-    ? (parseFloat(payAmount) + parseFloat(payAmount) * feePercent + feeFixed).toFixed(2)
-    : '0.00'
+  const payRent = payAmount ? parseFloat(payAmount) : 0
+  const payTotal = payRent ? ((payRent + feeFixed) / (1 - feePercent)).toFixed(2) : '0.00'
+  const payFees = payRent ? (parseFloat(payTotal) - payRent).toFixed(2) : '0.00'
 
   return (
     <main>
@@ -247,37 +236,36 @@ export default function LocationDetail() {
                 Video Tour
               </h2>
             </AnimateOnScroll>
-            <div className="space-y-3 max-w-4xl">
-              {location.detailPageVideos.map((video, i) => (
+            <div className={`space-y-6 ${!videoSectionExpanded && location.detailPageVideos.length > 1 ? 'max-h-[500px] overflow-hidden relative' : ''}`}>
+              {(videoSectionExpanded ? location.detailPageVideos : [location.detailPageVideos[0]]).map((video, i) => (
                 <AnimateOnScroll key={video._id || i} delay={i * 0.05}>
-                  <div className="border border-[#1A1A1A]/10 overflow-hidden">
-                    <button
-                      onClick={() => setOpenVideoIndex(openVideoIndex === i ? null : i)}
-                      className="w-full flex items-center justify-between px-6 py-4 bg-[#F7F6F4] hover:bg-[#EFEFED] transition-colors"
-                    >
-                      <span className="font-display font-bold uppercase tracking-wider text-sm text-[#1A1A1A]">
-                        Video {i + 1}
-                      </span>
-                      <svg
-                        className={`w-5 h-5 text-[#CC6633] transition-transform ${openVideoIndex === i ? 'rotate-180' : ''}`}
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                    {openVideoIndex === i && (
-                      <div className="aspect-video bg-[#1A1A1A]">
-                        <video
-                          src={video.src}
-                          poster={video.poster}
-                          controls
-                          className="w-full h-full"
-                        />
-                      </div>
-                    )}
+                  <div className="aspect-video bg-[#1A1A1A]">
+                    <ReactPlayer
+                      url={video.src}
+                      controls
+                      width="100%"
+                      height="100%"
+                      config={{
+                        file: {
+                          attributes: {
+                            poster: video.poster,
+                          },
+                        },
+                      }}
+                    />
                   </div>
                 </AnimateOnScroll>
               ))}
+              {!videoSectionExpanded && location.detailPageVideos.length > 1 && (
+                <div className="text-center pt-4">
+                  <button
+                    onClick={() => setVideoSectionExpanded(true)}
+                    className="font-display font-bold uppercase tracking-wider text-sm text-[#CC6633] hover:text-[#A85228] transition-colors"
+                  >
+                    See All {location.detailPageVideos.length} Videos →
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -438,54 +426,20 @@ export default function LocationDetail() {
               </h2>
             </AnimateOnScroll>
             <AnimateOnScroll delay={0.1}>
-              <div className="relative max-w-4xl overflow-hidden bg-[#1A1A1A]" style={{ aspectRatio: '16/9' }}>
-                <AnimatePresence initial={false} custom={galleryDirection}>
-                  <motion.img
-                    key={galleryIndex}
-                    src={galleryImages[galleryIndex]?.src || galleryImages[galleryIndex]}
-                    alt={galleryImages[galleryIndex]?.alt || `${location.name} photo ${galleryIndex + 1}`}
-                    custom={galleryDirection}
-                    variants={{
-                      enter: (d) => ({ x: d > 0 ? '100%' : '-100%', opacity: 0 }),
-                      center: { x: 0, opacity: 1 },
-                      exit: (d) => ({ x: d > 0 ? '-100%' : '100%', opacity: 0 }),
-                    }}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                </AnimatePresence>
-                {galleryImages.length > 1 && (
-                  <>
-                    <button
-                      onClick={prev}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/80 flex items-center justify-center text-white transition-colors"
-                    >
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                      </svg>
-                    </button>
-                    <button
-                      onClick={() => next()}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/80 flex items-center justify-center text-white transition-colors"
-                    >
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-                      {galleryImages.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => goTo(i, i > galleryIndex ? 1 : -1)}
-                          className={`w-2 h-2 rounded-full transition-colors ${i === galleryIndex ? 'bg-white' : 'bg-white/40'}`}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
+              <div style={{ height: '600px' }}>
+                <Carousel
+                  images={galleryImages}
+                  hasMediaButton={false}
+                  hasSizeButton="bottomRight"
+                  hasIndexBoard={false}
+                  hasCaptions="top"
+                  hasDotButtons="bottom"
+                  hasThumbnails={true}
+                  hasLeftButton="centerLeft"
+                  hasRightButton="centerRight"
+                  shouldSwipeOnMouse={false}
+                  objectFit="contain"
+                />
               </div>
             </AnimateOnScroll>
           </div>
@@ -544,9 +498,14 @@ export default function LocationDetail() {
               </button>
             </div>
             <div className="px-8 py-6 space-y-5">
+              {paymentApproved && (
+                <div className="bg-green-50 border border-green-200 p-4 text-green-700 text-sm font-display font-bold">
+                  Thank you for your payment!
+                </div>
+              )}
               <div>
                 <label className="block font-display font-bold uppercase tracking-widest text-xs text-[#1A1A1A]/50 mb-2">
-                  Rent Amount
+                  Total Rent
                 </label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#1A1A1A]/40 text-sm">$</span>
@@ -561,15 +520,15 @@ export default function LocationDetail() {
                   />
                 </div>
               </div>
-              {payAmount && parseFloat(payAmount) > 0 && (
+              {payRent > 0 && (
                 <div className="bg-[#F7F6F4] p-4 border border-[#1A1A1A]/10 text-xs space-y-1">
                   <div className="flex justify-between text-[#1A1A1A]/55">
                     <span>Rent</span>
-                    <span>${parseFloat(payAmount).toFixed(2)}</span>
+                    <span>${payRent.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-[#1A1A1A]/55">
-                    <span>Processing fee</span>
-                    <span>${(parseFloat(payAmount) * feePercent + feeFixed).toFixed(2)}</span>
+                    <span>Fees</span>
+                    <span>${payFees}</span>
                   </div>
                   <div className="flex justify-between font-bold text-[#1A1A1A] pt-1 border-t border-[#1A1A1A]/10">
                     <span>Total</span>
@@ -577,17 +536,14 @@ export default function LocationDetail() {
                   </div>
                 </div>
               )}
-              <div className="pt-2">
-                <button
-                  disabled={!payAmount || parseFloat(payAmount) <= 0}
-                  className="w-full font-display font-bold uppercase tracking-wider text-sm bg-[#003087] text-white py-3.5 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#002166] transition-colors"
-                >
-                  Continue to PayPal
-                </button>
-                <p className="text-center text-[#1A1A1A]/35 text-xs mt-3 font-body">
-                  You will be redirected to PayPal to complete payment.
-                </p>
-              </div>
+              {payRent > 0 && (
+                <PayPalButton
+                  amount={payTotal}
+                  description={`Payment for ${location.name}`}
+                  email={location.paypalEmail}
+                  onApprove={() => { setPaymentApproved(true); setPayAmount('') }}
+                />
+              )}
             </div>
           </div>
         </div>

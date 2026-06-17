@@ -7,6 +7,7 @@
   or video player when the video asset is ready.
 */
 import { Link } from 'react-router-dom'
+import ReactPlayer from 'react-player/file'
 import AnimateOnScroll from '../components/AnimateOnScroll'
 import kevinImage from '../assets/kevin.jpg'
 
@@ -159,7 +160,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── VIDEO PLACEHOLDER ────────────────────────────────── */}
+      {/* ── VIDEO ────────────────────────────────────────────── */}
       <section className="bg-[#F7F6F4] py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
@@ -171,16 +172,20 @@ export default function About() {
             </h2>
           </AnimateOnScroll>
           <AnimateOnScroll delay={0.1}>
-            <div className="relative bg-[#1A1A1A] aspect-video flex items-center justify-center group cursor-pointer max-w-4xl">
-              {/* Play button */}
-              <div className="w-20 h-20 rounded-full bg-[#CC6633] flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
-                <svg className="w-7 h-7 text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-              <div className="absolute bottom-6 left-8 text-white/40 font-display font-semibold uppercase tracking-widest text-xs">
-                Video — Coming Soon
-              </div>
+            <div className="aspect-video bg-[#1A1A1A]">
+              <ReactPlayer
+                url="https://res.cloudinary.com/dz54puaeo/video/upload/v1697497123/GARAGEVIDEOS/WhatIsContractors.mp4"
+                controls
+                width="100%"
+                height="100%"
+                config={{
+                  file: {
+                    attributes: {
+                      poster: 'https://res.cloudinary.com/dz54puaeo/image/upload/v1697497853/TCG/poster.jpg',
+                    },
+                  },
+                }}
+              />
             </div>
           </AnimateOnScroll>
         </div>
