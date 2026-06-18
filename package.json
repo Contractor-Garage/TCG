@@ -12,7 +12,9 @@
     "postinstall": "cd node_modules/bcrypt && node-pre-gyp install --fallback-to-build",
     "build-old": "cd client/ && npm ci --dry-run=false --ignore-scripts=true && npm run build",
     "build-old2": "cd client/ && npm run build",
-    "deploy": "cd client/ && npm run build && ncp build ../build && cd ../ && git add . && git commit -m \"Deploy Commit\" && git push"
+    "deploy": "cd client/ && npm run build && ncp build ../build && cd ../ && git add . && git commit -m \"Deploy Commit\" && git push",
+    "build-new": "cd client-new && npm install --dry-run=false --legacy-peer-deps && npm run build && cd .. && node -e \"const fs=require('fs');fs.rmSync('build',{recursive:true,force:true});fs.cpSync('client-new/dist','build',{recursive:true})\"",
+    "deploy-new": "npm run build-new && git add . && git commit -m \"Deploy New UI (v3)\" && git push"
   },
   "dependencies": {
     "axios": "^0.21.1",
