@@ -11,6 +11,10 @@ import ReactPlayer from 'react-player/file'
 import AnimateOnScroll from '../components/AnimateOnScroll'
 import useMetaTags from '../hooks/useMetaTags'
 import kevinImage from '../assets/kevin.jpg'
+// Served locally instead of from Cloudinary to reduce Cloudinary request load
+// (these are fixed assets, not user-managed location media).
+import whatIsContractorsVideo from '../assets/WhatIsContractors.mp4'
+import posterImage from '../assets/poster.jpg'
 
 const stats = [
   { value: '2008', label: 'First Project Built' },
@@ -179,14 +183,16 @@ export default function About() {
           <AnimateOnScroll delay={0.1}>
             <div className="aspect-video bg-[#1A1A1A]">
               <ReactPlayer
-                url="https://res.cloudinary.com/dz54puaeo/video/upload/v1697497123/GARAGEVIDEOS/WhatIsContractors.mp4"
+                // Previously: https://res.cloudinary.com/dz54puaeo/video/upload/v1697497123/GARAGEVIDEOS/WhatIsContractors.mp4
+                url={whatIsContractorsVideo}
                 controls
                 width="100%"
                 height="100%"
                 config={{
                   file: {
                     attributes: {
-                      poster: 'https://res.cloudinary.com/dz54puaeo/image/upload/v1697497853/TCG/poster.jpg',
+                      // Previously: https://res.cloudinary.com/dz54puaeo/image/upload/v1697497853/TCG/poster.jpg
+                      poster: posterImage,
                     },
                   },
                 }}
