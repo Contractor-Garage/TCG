@@ -40,4 +40,13 @@ export const API = {
         console.error('API submitContactForm:', error)
         throw error
       }),
+
+  submitSeminarSignupForm: (formData) =>
+    axios
+      .post(localHost + '/api/seminar/sign-up', formData, config)
+      .then((res) => res.data)
+      .catch((error) => {
+        console.error('API submitSeminarSignupForm:', error)
+        throw error
+      }),
 }

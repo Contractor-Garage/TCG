@@ -74,7 +74,7 @@ export default function LocationDetail() {
   }
 
   const hasAvailable = location.units?.some((u) => u.available)
-  const status = hasAvailable ? 'Available' : 'Full'
+  const status = location.comingSoon ? 'Coming Soon' : hasAvailable ? 'Available' : 'Full'
   const fullAddress = [location.addressFirstLine, location.addressSecondLine].filter(Boolean).join(', ')
   const hasCoordinates = location.coordinates?.length === 2
 
@@ -122,9 +122,13 @@ export default function LocationDetail() {
                 <span className={`inline-flex items-center gap-2 px-4 py-1.5 text-sm font-display font-bold uppercase tracking-wider ${
                   status === 'Available'
                     ? 'bg-green-500/15 text-green-600 border border-green-500/30'
+                    : status === 'Coming Soon'
+                    ? 'bg-[#CC6633]/15 text-[#CC6633] border border-[#CC6633]/30'
                     : 'bg-gray-100 text-gray-500 border border-gray-200'
                 }`}>
-                  <span className={`w-2 h-2 rounded-full ${status === 'Available' ? 'bg-green-500' : 'bg-gray-400'}`} />
+                  <span className={`w-2 h-2 rounded-full ${
+                    status === 'Available' ? 'bg-green-500' : status === 'Coming Soon' ? 'bg-[#CC6633]' : 'bg-gray-400'
+                  }`} />
                   {status}
                 </span>
               </div>
@@ -167,7 +171,12 @@ export default function LocationDetail() {
                       <svg className="w-4 h-4 text-[#CC6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                       </svg>
-                      <span className="text-[#1A1A1A]/80">{scramble(location.contactPhone)}</span>
+                      <a
+                        href={`tel:${location.contactPhone.replace(/[^\d+]/g, '')}`}
+                        className="text-[#1A1A1A]/80 hover:text-[#CC6633] transition-colors"
+                      >
+                        {scramble(location.contactPhone)}
+                      </a>
                     </div>
                   )}
                   {location.contactEmail && (
@@ -175,7 +184,12 @@ export default function LocationDetail() {
                       <svg className="w-4 h-4 text-[#CC6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      <span className="text-[#1A1A1A]/80">{scramble(location.contactEmail)}</span>
+                      <a
+                        href={`mailto:${location.contactEmail}`}
+                        className="text-[#1A1A1A]/80 hover:text-[#CC6633] transition-colors break-all"
+                      >
+                        {scramble(location.contactEmail)}
+                      </a>
                     </div>
                   )}
                   <div className="flex items-start gap-3">
@@ -210,12 +224,6 @@ export default function LocationDetail() {
                   center={location.coordinates}
                   zoom={15}
                   scrollWheelZoom={false}
-                  dragging={false}
-                  zoomControl={false}
-                  doubleClickZoom={false}
-                  touchZoom={false}
-                  keyboard={false}
-                  attributionControl={false}
                   style={{ width: '100%', height: '100%' }}
                 >
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -315,9 +323,12 @@ export default function LocationDetail() {
               <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
                 Bay Types
               </p>
-              <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-8">
-                Unit Summary
+              <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-3">
+                Property Summary
               </h2>
+              <p className="text-[#1A1A1A]/55 text-sm italic mb-8 max-w-2xl">
+                An overview of the unit types at this property — see current availability below.
+              </p>
               <div className="bg-white border border-[#1A1A1A]/10 overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
@@ -349,14 +360,14 @@ export default function LocationDetail() {
             </AnimateOnScroll>
           )}
 
-          {location.units?.some((u) => u.available) && (
-            <AnimateOnScroll>
-              <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
-                Available Now
-              </p>
-              <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-8">
-                Unit Availability
-              </h2>
+          <AnimateOnScroll>
+            <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-2">
+              Current Availability
+            </p>
+            <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-8">
+              Unit Availabilities
+            </h2>
+            {location.units?.some((u) => u.available) ? (
               <div className="bg-white border border-[#1A1A1A]/10 overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
@@ -383,8 +394,15 @@ export default function LocationDetail() {
                   </tbody>
                 </table>
               </div>
-            </AnimateOnScroll>
-          )}
+            ) : (
+              <div className="bg-white border border-[#1A1A1A]/10 p-8">
+                <p className="text-[#1A1A1A]/65 text-sm leading-relaxed">
+                  No units are currently available at this location. Please contact us
+                  using the information above to be added to the waitlist.
+                </p>
+              </div>
+            )}
+          </AnimateOnScroll>
 
           {location.extras?.length > 0 && (
             <AnimateOnScroll>

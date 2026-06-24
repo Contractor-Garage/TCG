@@ -59,6 +59,9 @@ const locationSchema = mongoose.Schema({
     isDraft: Boolean,
     // Flag to check if this location is published
     isPublished: Boolean,
+    // Flag to mark this location as "coming soon" — takes precedence over the
+    // availability-derived status (Available/Full) on the public site.
+    comingSoon: Boolean,
     // The user who created this record
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,

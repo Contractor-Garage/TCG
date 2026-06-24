@@ -8,12 +8,16 @@
     name, email, market (city), message.
 */
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import AnimateOnScroll from '../components/AnimateOnScroll'
 import useMetaTags from '../hooks/useMetaTags'
 import { API } from '../util/API'
 import presentingImage from '../assets/presenting.png'
 
 const consultingFeatures = [
+  'Access to Online Course',
+  'Access to historical plans and pro formas',
+  'Access to lease',
   'Site selection criteria & market analysis',
   'Zoning and permitting guidance',
   'Construction specs & vendor recommendations',
@@ -26,7 +30,7 @@ const subscriptionFeatures = [
   'Your own page on contractorgarage.com',
   'Lead generation & national SEO exposure',
   'Licensed use of the Contractor Garage™ trademark',
-  'Self-manage unit availability online',
+  'Self-manage your building\'s availability online',
   'PayPal payment integration for leads',
   'Credibility with lenders and investors',
 ]
@@ -203,7 +207,7 @@ export default function BrandWithUs() {
                       Development Consulting
                     </h3>
                     <div className="flex items-end gap-2 mt-4">
-                      <span className="font-display font-black text-4xl text-white">$4–5K</span>
+                      <span className="font-display font-black text-4xl text-white">$3,000</span>
                       <span className="text-white/50 text-sm mb-1 font-body">one-time</span>
                     </div>
                   </div>
@@ -293,7 +297,7 @@ export default function BrandWithUs() {
       {/* ── ONLINE COURSE ────────────────────────────────────── */}
       <section className="bg-[#1A1A1A] py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="max-w-3xl">
             {/* Left: content */}
             <AnimateOnScroll>
               <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
@@ -334,48 +338,19 @@ export default function BrandWithUs() {
               </div>
 
               <a
-                href="#contact"
+                href="https://contractorgarage.teachable.com/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#CC6633] text-white px-8 py-3.5 hover:bg-[#A85228] transition-colors"
               >
                 Get Course Access →
               </a>
             </AnimateOnScroll>
 
-            {/* Right: video embed placeholder */}
-            <AnimateOnScroll delay={0.1} direction="left">
-              {/* TODO: Replace href with actual Teachable course URL when available */}
-              <div className="relative bg-[#0D0D0D] aspect-video flex items-center justify-center group cursor-pointer border border-white/10">
-                <div className="w-20 h-20 rounded-full bg-[#CC6633] flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
-                  <svg className="w-7 h-7 text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-                <div className="absolute top-5 left-6">
-                  <p className="text-white/25 font-display font-bold uppercase tracking-widest text-xs">Course Preview</p>
-                </div>
-                <div className="absolute bottom-5 left-6 right-6">
-                  <p className="text-white/30 font-display font-semibold uppercase tracking-widest text-xs">
-                    {/* TODO: Replace with actual Teachable embed or YouTube intro video */}
-                    Video — Coming Soon
-                  </p>
-                </div>
-              </div>
-              <div className="bg-[#0D0D0D] border border-white/10 border-t-0 px-6 py-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-white/40 font-display font-bold uppercase tracking-widest text-xs mb-1">Available On</p>
-                    <p className="text-white font-display font-black uppercase text-lg">Teachable</p>
-                  </div>
-                  <a
-                    href="#contact"
-                    className="font-display font-bold uppercase tracking-wider text-xs text-[#CC6633] border border-[#CC6633] px-4 py-2 hover:bg-[#CC6633] hover:text-white transition-colors"
-                  >
-                    {/* TODO: Replace href="#contact" with direct Teachable course URL */}
-                    Enroll →
-                  </a>
-                </div>
-              </div>
-            </AnimateOnScroll>
+            {/* Course preview hidden until a real preview clip exists — only the
+                full-length course videos are available right now. The "Get Course
+                Access" button above links to Teachable. Restore a preview embed
+                here once a short preview video is produced. */}
           </div>
         </div>
       </section>
@@ -448,12 +423,12 @@ export default function BrandWithUs() {
                 </div>
               </div>
 
-              <a
-                href="#contact"
+              <Link
+                to="/seminar"
                 className="inline-block font-display font-bold uppercase tracking-wider text-sm bg-[#CC6633] text-white px-8 py-3.5 hover:bg-[#A85228] transition-colors"
               >
                 Get Event Info
-              </a>
+              </Link>
             </AnimateOnScroll>
 
             {/* Right: photo */}

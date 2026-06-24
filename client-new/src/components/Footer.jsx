@@ -54,10 +54,18 @@ export default function Footer() {
               Services
             </h4>
             <ul className="space-y-3 text-white/65 text-sm">
-              <li>Development Consulting</li>
+              <li>
+                <Link to="/development-services" className="hover:text-white transition-colors">
+                  Development Consulting
+                </Link>
+              </li>
               <li>Brand Subscription</li>
               <li>Online Course</li>
-              <li>Live 2-Day Seminar</li>
+              <li>
+                <Link to="/seminar" className="hover:text-white transition-colors">
+                  Live 2-Day Seminar
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -70,10 +78,10 @@ export default function Footer() {
               <li>Kansas City Metro, KS</li>
               <li>
                 <a
-                  href="mailto:info@contractorgarage.com"
+                  href="mailto:kcombs@insightcommercial.net"
                   className="hover:text-white transition-colors"
                 >
-                  info@contractorgarage.com
+                  kcombs@insightcommercial.net
                 </a>
               </li>
               <li>

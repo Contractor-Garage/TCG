@@ -51,7 +51,7 @@ const whyCards = [
       </svg>
     ),
     title: 'Drive-In Access',
-    body: 'Large maneuverable lots and 10-foot overhead doors let you pull a full truck and trailer straight in. No tight turns, no wasted time.',
+    body: 'Easily maneuverable lots with large overhead doors let you pull a full truck and trailer straight in. No tight turns, no wasted time.',
   },
   {
     icon: (
@@ -125,7 +125,7 @@ export default function Home() {
             className="text-white/75 text-lg lg:text-xl max-w-xl mb-10 leading-relaxed"
           >
             Large-bay industrial workspace for contractors, tradespeople, and small
-            businesses. More than mini storage. Less overhead than flex. The right
+            businesses. Better than mini storage. Less overhead than flex. The right
             fit — finally.
           </motion.p>
           <motion.div

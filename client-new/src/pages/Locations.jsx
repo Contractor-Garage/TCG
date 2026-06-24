@@ -32,7 +32,7 @@ function LocationMarkers({ locations }) {
         popup: `
           <div style="font-size:13px;max-width:220px">
             <strong style="display:block;margin-bottom:4px">${location.name}</strong>
-            ${location.units?.some(u => u.available) ? '<span style="background:#22c55e;color:#fff;font-size:11px;font-weight:bold;padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:4px">Units Available</span>' : ''}
+            ${location.comingSoon ? '<span style="background:#CC6633;color:#fff;font-size:11px;font-weight:bold;padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:4px">Coming Soon</span>' : location.units?.some(u => u.available) ? '<span style="background:#22c55e;color:#fff;font-size:11px;font-weight:bold;padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:4px">Units Available</span>' : ''}
             <span style="color:#666;display:block">${location.addressFirstLine || ''}</span>
             <span style="color:#666;display:block;margin-bottom:6px">${location.addressSecondLine || ''}</span>
             ${location.thumbnailImage ? `<img src="${location.thumbnailImage.src}" alt="${location.thumbnailImage.alt || ''}" style="width:100%;border-radius:4px;margin-bottom:6px"/>` : ''}
@@ -65,6 +65,7 @@ const statusConfig = {
 }
 
 function getLocationStatus(location) {
+  if (location.comingSoon) return 'Coming Soon'
   const hasAvailable = location.units?.some((u) => u.available)
   return hasAvailable ? 'Available' : 'Full'
 }
@@ -263,6 +264,7 @@ export default function Locations() {
             >
               <option value="all">All Statuses</option>
               <option value="Available">Available</option>
+              <option value="Coming Soon">Coming Soon</option>
               <option value="Full">Full</option>
             </select>
           </div>

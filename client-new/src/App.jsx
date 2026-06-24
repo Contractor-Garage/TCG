@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Locations from './pages/Locations'
 import BrandWithUs from './pages/BrandWithUs'
+import Seminar from './pages/Seminar'
 import LocationDetail from './pages/LocationDetail'
 import LocationPreview from './pages/LocationPreview'
 import PrivacyPolicy from './pages/PrivacyPolicy'
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="/about-us" element={<About />} />
             <Route path="/directory" element={<Locations />} />
             <Route path="/development-services" element={<BrandWithUs />} />
+            <Route path="/seminar" element={<Seminar />} />
             <Route path="/location/preview/:id" element={<LocationPreview />} />
             <Route path="/location/:slug" element={<LocationDetail />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

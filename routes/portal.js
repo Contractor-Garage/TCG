@@ -386,6 +386,36 @@ router.post('/location/hide/:id', (req, res, next) => {
   });
 });
 
+// Set/clear the "coming soon" flag for a location. Body: { comingSoon: boolean }.
+// Used by the admin portal (separate v2 repo) to mark a location as coming soon.
+router.post('/location/coming-soon/:id', (req, res, next) => {
+  if (!req.params.id) {
+    const err = new Error('_id field not found and is required for update operation.');
+    err.status = 400;
+    next(err);
+    return
+  }
+  Location.findById(req.params.id)
+  .then(location => {
+    // If below admin and location is not yours don't allow this operation.
+    if (!req.session.user.isAdmin && !location.createdBy.equals(req.session.user._id)) {
+      res.status(401).send('Not authorized! Unable to update this location!');
+    }
+    else {
+      Location.findByIdAndUpdate(req.params.id, { comingSoon: !!req.body.comingSoon }, { new: true })
+      .then(updated => {
+        res.status(200).json({ _id: updated._id, comingSoon: updated.comingSoon });
+      })
+      .catch(err => {
+        res.status(err.status ? err.status : 500).send(err.message ? err.message : 'There was a problem updating this location.');
+      });
+    }
+  })
+  .catch(err => {
+    res.status(err.status ? err.status : 500).send(err.message ? err.message : 'There was a problem updating this location.');
+  });
+});
+
 router.delete('/location/:id', (req, res, next) => {
   if (!req.params.id) {
     const err = new Error('_id field not found and is required for update operation.');

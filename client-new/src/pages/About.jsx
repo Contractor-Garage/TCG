@@ -99,12 +99,12 @@ export default function About() {
                 <p>
                   He left engineering and set out to build it himself. The first
                   Contractor Garage opened in 2008 — right as the financial crisis hit.
-                  He filled it using private funds before construction was even complete.
+                  He built it using private funds and filled it before construction was even complete.
                   That proof of concept has since been repeated more than ten times
                   across the Kansas City metro.
                 </p>
                 <p>
-                  Kevin holds the CCIM designation and has spent the last fifteen years
+                  Kevin holds the CCIM designation and has since been
                   refining a model that is simple to build, simple to operate, and
                   repeatable in virtually any market. Now he shares it.
                 </p>
