@@ -8,7 +8,7 @@
 
   The sign-up form posts to /api/seminar/sign-up via API.submitSeminarSignupForm,
   with a hidden honeypot "username" field (same anti-spam pattern as the contact
-  form). Event dates: April 16–18, 2027.
+  form). Event dates: April 17–18, 2027.
 */
 import { useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
@@ -33,22 +33,16 @@ const credentials = [
 
 const schedule = [
   {
-    date: 'Fri · April 16, 2027',
-    label: 'Optional',
-    title: 'Meet & Greet',
-    body: '7:00 PM — Optional meet and greet at Brew Lab (7925 Marty St, Overland Park, KS).',
-  },
-  {
     date: 'Sat · April 17, 2027',
     label: 'Day 1',
     title: 'The Nitty Gritty',
-    body: '9:00 AM — Session 1 in a private event space at Brew Lab. Complimentary lunch and happy-hour drinks provided.',
+    body: '9:00 AM — Session 1 in a private event space at Tallboyz Garage. Complimentary lunch and happy-hour drinks provided.',
   },
   {
     date: 'Sun · April 18, 2027',
     label: 'Day 2',
     title: 'Property Tour',
-    body: '9:00 AM — Guided tour of active Contractor Garage™ properties across the KC metro. Wraps up at Brew Lab around 3:00 PM.',
+    body: '9:00 AM — Guided tour of active Contractor Garage™ properties across the KC metro. Wraps up at Tallboyz Garage around 3:00 PM.',
   },
 ]
 
@@ -190,7 +184,7 @@ export default function Seminar() {
   useMetaTags({
     title: 'Live 2-Day Seminar',
     description:
-      'Introduction to the Development of Large-Bay Storage — a live 2-day seminar in Kansas City with Kevin Combs, CCIM. April 16–18, 2027.',
+      'Introduction to the Development of Large-Bay Storage — a live 2-day seminar in Kansas City with Kevin Combs, CCIM. April 17–18, 2027.',
   })
 
   const [formData, setFormData] = useState({
@@ -260,7 +254,7 @@ export default function Seminar() {
           <AnimateOnScroll delay={0.15}>
             <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
               <p className="font-display font-black text-white uppercase text-2xl">
-                April 16–18, 2027
+                April 17–18, 2027
               </p>
               <span className="text-white/30">·</span>
               <p className="text-white/55 font-display font-semibold uppercase tracking-widest text-xs">
@@ -314,8 +308,8 @@ export default function Seminar() {
               <div className="space-y-5 text-[#1A1A1A]/70 leading-relaxed">
                 <p>
                   A <strong>two-day course</strong> starting with the basics. Day 1 gets
-                  down to the nitty-gritty in a private event space at Brew Lab, a
-                  neighborhood brewpub in Overland Park, Kansas — lunch and happy-hour
+                  down to the nitty-gritty in a private event space at Tallboyz Garage, a
+                  neighborhood bar and grill in Overland Park, Kansas — lunch and happy-hour
                   drinks provided. Day 2 is a guided tour of our properties across the
                   greater Kansas City metro.
                 </p>
@@ -398,7 +392,7 @@ export default function Seminar() {
               Schedule
             </p>
             <h2 className="font-display font-black text-white uppercase leading-none text-4xl lg:text-5xl mb-4">
-              April 16–18, 2027
+              April 17–18, 2027
             </h2>
             <p className="text-white/55 text-sm mb-14 max-w-lg">
               In-person in Overland Park, KS. A webinar option runs once a 4-person
@@ -440,7 +434,7 @@ export default function Seminar() {
                 />
                 <Marker position={VENUE.coordinates}>
                   <Popup>
-                    <strong>Brew Lab</strong>
+                    <strong>Tallboyz Garage</strong>
                     <br />
                     {VENUE.addressFirstLine}
                     <br />

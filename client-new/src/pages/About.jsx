@@ -94,23 +94,24 @@ export default function About() {
               </h2>
               <div className="space-y-5 text-[#1A1A1A]/70 leading-relaxed">
                 <p>
-                  Kevin Combs spent the early 2000s working as an engineer. By 2005 he
-                  had spotted a gap in the market that nobody was filling: small trade
-                  businesses — plumbers, electricians, landscapers, contractors — needed
-                  750–1,500 SF of working space. Not storage. Not flex office. Something
+                  Kevin Combs spent the early 2000s working as an engineer before
+                  becoming a commercial real estate broker focusing his efforts in the
+                  industrial market in Kansas City. By 2006 he had spotted a gap in the
+                  market that nobody was filling: small trade businesses — plumbers,
+                  electricians, landscapers, contractors — needing 750–1,500 SF of
+                  working space. Not cheap storage. Not expensive flex office. Something
                   in between that didn't exist.
                 </p>
                 <p>
-                  He left engineering and set out to build it himself. The first
-                  Contractor Garage opened in 2008 — right as the financial crisis hit.
-                  He built it using private funds and filled it before construction was even complete.
-                  That proof of concept has since been repeated more than ten times
-                  across the Kansas City metro.
+                  He built his first Contractor Garage in 2008 — right as the financial
+                  crisis hit. He built it using private funds and filled it before
+                  construction was even complete. That proof of concept has since been
+                  repeated all across the Kansas City metro.
                 </p>
                 <p>
-                  Kevin holds the CCIM designation and has since been
-                  refining a model that is simple to build, simple to operate, and
-                  repeatable in virtually any market. Now he shares it.
+                  Kevin holds the CCIM designation and has since been refining a model
+                  that is simple to build, simple to operate, and repeatable in virtually
+                  any market. Now he shares it so you can build one in your market.
                 </p>
                 <p className="text-[#1A1A1A]/50 text-sm italic">
                   "I had no idea I was creating a product category. I just knew the
