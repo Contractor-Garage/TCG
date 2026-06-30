@@ -63,10 +63,12 @@ router.get('/user/is-logged-in', (req, res, next) => {
 */
 
 /**
- * Get all locations that are not in draft state.
+ * Get all published, non-draft locations for the public site (excludes drafts
+ * and hidden/unpublished locations; coming-soon locations are published, so
+ * they remain included).
  */
 router.get('/locations', (req, res, next) => {
-  Location.find({ isDraft: false })
+  Location.find({ isDraft: false, isPublished: true })
   .then(locations => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
@@ -76,10 +78,11 @@ router.get('/locations', (req, res, next) => {
 });
 
 /**
- * Get location from slug
+ * Get a published, non-draft location by slug (hidden/draft locations are not
+ * served publicly; admin previews use /location/preview/:id).
  */
 router.get('/location/:slug', (req, res, next) => {
-  Location.findOne({ slug: req.params.slug, isDraft: false })
+  Location.findOne({ slug: req.params.slug, isDraft: false, isPublished: true })
   .then(location => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
