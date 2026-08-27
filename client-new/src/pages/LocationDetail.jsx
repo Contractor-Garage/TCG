@@ -9,6 +9,7 @@ import PayPalButton from '../components/PayPalButton'
 import useMetaTags from '../hooks/useMetaTags'
 import useTextScramble from '../hooks/useTextScramble'
 import { API } from '../util/API'
+import { getAvailabilityLabel, getAvailableUnits, getLocationStatus, isFutureDated } from '../util/availability'
 
 export default function LocationDetail() {
   const { slug } = useParams()
@@ -73,8 +74,8 @@ export default function LocationDetail() {
     return <Navigate to="/directory" replace />
   }
 
-  const hasAvailable = location.units?.some((u) => u.available)
-  const status = location.comingSoon ? 'Coming Soon' : hasAvailable ? 'Available' : 'Full'
+  const status = getLocationStatus(location)
+  const availableUnits = getAvailableUnits(location)
   const fullAddress = [location.addressFirstLine, location.addressSecondLine].filter(Boolean).join(', ')
   const hasCoordinates = location.coordinates?.length === 2
 
@@ -367,12 +368,13 @@ export default function LocationDetail() {
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-8">
               Unit Availabilities
             </h2>
-            {location.units?.some((u) => u.available) ? (
+            {availableUnits.length > 0 ? (
               <div className="bg-white border border-[#1A1A1A]/10 overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="bg-[#1A1A1A]">
                       <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Unit</th>
+                      <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Available</th>
                       <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Rent</th>
                       <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Width</th>
                       <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Depth</th>
@@ -381,9 +383,12 @@ export default function LocationDetail() {
                     </tr>
                   </thead>
                   <tbody>
-                    {location.units.filter((u) => u.available).map((unit, i) => (
+                    {availableUnits.map((unit, i) => (
                       <tr key={i} className={`border-t border-[#1A1A1A]/8 bg-green-50/60 ${i % 2 === 1 ? 'bg-green-50/30' : ''}`}>
                         <td className="px-6 py-4 font-display font-bold text-green-700 uppercase tracking-wide">{unit.unitName}</td>
+                        <td className={`px-6 py-4 font-display font-bold uppercase tracking-wide whitespace-nowrap ${isFutureDated(unit) ? 'text-[#CC6633]' : 'text-green-700'}`}>
+                          {getAvailabilityLabel(unit)}
+                        </td>
                         <td className="px-6 py-4 text-green-700">{unit.monthlyRent ? `$${unit.monthlyRent}/mo` : '—'}</td>
                         <td className="px-6 py-4 text-green-700/70">{unit.width ? `${unit.width}′` : '—'}</td>
                         <td className="px-6 py-4 text-green-700/70">{unit.depth ? `${unit.depth}′` : '—'}</td>

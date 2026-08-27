@@ -243,14 +243,14 @@ export default function BrandWithUs() {
                 <div className="p-8 lg:p-10 flex flex-col flex-1">
                   <div className="mb-6">
                     <p className="font-display font-bold uppercase tracking-widest text-[#CC6633] text-xs mb-2">
-                      Annual License
+                      License
                     </p>
                     <h3 className="font-display font-black uppercase text-2xl lg:text-3xl text-[#1A1A1A] mb-1">
                       Brand Subscription
                     </h3>
                     <div className="flex items-end gap-2 mt-4">
-                      <span className="font-display font-black text-4xl text-[#1A1A1A]">$1–3K</span>
-                      <span className="text-[#1A1A1A]/50 text-sm mb-1 font-body">/year · 10yr min.</span>
+                      <span className="font-display font-black text-4xl text-[#1A1A1A]">$10K–$30K</span>
+                      <span className="text-[#1A1A1A]/50 text-sm mb-1 font-body">per project · one-time</span>
                     </div>
                   </div>
 
@@ -268,7 +268,7 @@ export default function BrandWithUs() {
                   </ul>
 
                   <div className="mt-6 p-4 bg-[#F7F6F4] border border-[#1A1A1A]/8 text-xs text-[#1A1A1A]/55 leading-relaxed">
-                    Also available as a one-time lifetime membership — <strong className="text-[#1A1A1A]/80">$10K–$30K</strong> depending on market.
+                    Priced by project size. This is a simple brand subscription, not a franchise with royalties or annual fees.
                   </div>
 
                   <div className="mt-6">
@@ -284,13 +284,6 @@ export default function BrandWithUs() {
             </AnimateOnScroll>
 
           </div>
-
-          {/* Not a franchise note */}
-          <AnimateOnScroll delay={0.2}>
-            <p className="mt-8 text-center text-[#1A1A1A]/45 text-xs font-body">
-              ✦ This is a brand license, not a franchise. No royalties, no territory exclusivity, no corporate overhead.
-            </p>
-          </AnimateOnScroll>
         </div>
       </section>
 

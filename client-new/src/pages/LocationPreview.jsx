@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import AnimateOnScroll from '../components/AnimateOnScroll'
 import useTextScramble from '../hooks/useTextScramble'
 import { API } from '../util/API'
+import { getAvailabilityLabel, getAvailableUnits, isFutureDated } from '../util/availability'
 
 export default function LocationPreview() {
   const { id } = useParams()
@@ -37,6 +38,7 @@ export default function LocationPreview() {
   }, [])
 
   const galleryImages = location?.detailPageImages || []
+  const availableUnits = getAvailableUnits(location)
   const next = useCallback(() => goTo((galleryIndex + 1) % galleryImages.length, 1), [galleryIndex, galleryImages.length, goTo])
   const prev = () => goTo((galleryIndex - 1 + galleryImages.length) % galleryImages.length, -1)
 
@@ -214,6 +216,47 @@ export default function LocationPreview() {
                       <td className="px-6 py-4 text-[#1A1A1A]/65">{unit.numberOfUnitsByType}</td>
                       <td className="px-6 py-4 text-[#1A1A1A]/65">{unit.monthlyRent ? `$${unit.monthlyRent}/mo` : '—'}</td>
                       <td className="px-6 py-4 text-[#1A1A1A]/65">{unit.squareFeet || '—'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* UNIT AVAILABILITIES */}
+      {availableUnits.length > 0 && (
+        <section className="bg-white py-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-3xl lg:text-4xl mb-8">
+              Unit Availabilities
+            </h2>
+            <div className="bg-white border border-[#1A1A1A]/10 overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-[#1A1A1A]">
+                    <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Unit</th>
+                    <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Available</th>
+                    <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Rent</th>
+                    <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Width</th>
+                    <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Depth</th>
+                    <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Sq Ft</th>
+                    <th className="px-6 py-3 text-left font-display font-bold uppercase tracking-widest text-white/50 text-xs">Height</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {availableUnits.map((unit, i) => (
+                    <tr key={i} className={`border-t border-[#1A1A1A]/8 bg-green-50/60 ${i % 2 === 1 ? 'bg-green-50/30' : ''}`}>
+                      <td className="px-6 py-4 font-display font-bold text-green-700 uppercase tracking-wide">{unit.unitName}</td>
+                      <td className={`px-6 py-4 font-display font-bold uppercase tracking-wide whitespace-nowrap ${isFutureDated(unit) ? 'text-[#CC6633]' : 'text-green-700'}`}>
+                        {getAvailabilityLabel(unit)}
+                      </td>
+                      <td className="px-6 py-4 text-green-700">{unit.monthlyRent ? `$${unit.monthlyRent}/mo` : '—'}</td>
+                      <td className="px-6 py-4 text-green-700/70">{unit.width ? `${unit.width}′` : '—'}</td>
+                      <td className="px-6 py-4 text-green-700/70">{unit.depth ? `${unit.depth}′` : '—'}</td>
+                      <td className="px-6 py-4 text-green-700/70">{unit.squareFeet || '—'}</td>
+                      <td className="px-6 py-4 text-green-700/70">{unit.height || '—'}</td>
                     </tr>
                   ))}
                 </tbody>

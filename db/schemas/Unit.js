@@ -9,6 +9,13 @@ const unitSchema = mongoose.Schema({
     monthlyRent: Number,
     // Is this unit available
     available: Boolean,
+    // Date this unit becomes available, stored as a plain YYYY-MM-DD calendar date.
+    // Empty/absent means the unit is available now. Only meaningful when `available`
+    // is true. Stored as a String rather than a Date on purpose: this is a calendar
+    // date, not a moment in time, and a Date would be saved as UTC midnight and
+    // render as the previous day for every US visitor. Dates in the past are treated
+    // as "available now" at render time, so no cleanup job is needed.
+    availableDate: String,
     // Width in feet
     width: Number,
     // Height in feet

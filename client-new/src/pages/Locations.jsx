@@ -6,6 +6,7 @@ import AnimateOnScroll from '../components/AnimateOnScroll'
 import useMetaTags from '../hooks/useMetaTags'
 import { useMapContext } from '../context/MapContext'
 import { API } from '../util/API'
+import { getLocationStatus } from '../util/availability'
 import locationImage from '../assets/location.jpg'
 
 function MapEventHandler() {
@@ -32,7 +33,7 @@ function LocationMarkers({ locations }) {
         popup: `
           <div style="font-size:13px;max-width:220px">
             <strong style="display:block;margin-bottom:4px">${location.name}</strong>
-            ${location.comingSoon ? '<span style="background:#CC6633;color:#fff;font-size:11px;font-weight:bold;padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:4px">Coming Soon</span>' : location.units?.some(u => u.available) ? '<span style="background:#22c55e;color:#fff;font-size:11px;font-weight:bold;padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:4px">Units Available</span>' : ''}
+            ${getLocationStatus(location) === 'Coming Soon' ? '<span style="background:#CC6633;color:#fff;font-size:11px;font-weight:bold;padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:4px">Coming Soon</span>' : getLocationStatus(location) === 'Available' ? '<span style="background:#22c55e;color:#fff;font-size:11px;font-weight:bold;padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:4px">Units Available</span>' : ''}
             <span style="color:#666;display:block">${location.addressFirstLine || ''}</span>
             <span style="color:#666;display:block;margin-bottom:6px">${location.addressSecondLine || ''}</span>
             ${location.thumbnailImage ? `<img src="${location.thumbnailImage.src}" alt="${location.thumbnailImage.alt || ''}" style="width:100%;border-radius:4px;margin-bottom:6px"/>` : ''}
@@ -62,12 +63,6 @@ const statusConfig = {
     dot: 'bg-gray-400',
     badge: 'bg-gray-100 text-gray-500 border border-gray-200',
   },
-}
-
-function getLocationStatus(location) {
-  if (location.comingSoon) return 'Coming Soon'
-  const hasAvailable = location.units?.some((u) => u.available)
-  return hasAvailable ? 'Available' : 'Full'
 }
 
 export default function Locations() {
