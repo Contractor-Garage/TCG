@@ -3,8 +3,8 @@ var router = express.Router();
 const Location = require('../db/schemas/Location');
 const Preview = require('../db/schemas/Preview');
 const User = require('../db/schemas/User');
-const Honeypot = require('../db/schemas/Honeypot');
 const { transporter } = require('../services/mailer');
+const { verifyTurnstile } = require('../services/turnstile');
 const { buildSeminarSignupEmail, buildContactEmail } = require('../services/emailTemplates');
 
 /*
@@ -111,73 +111,130 @@ router.get('/location/preview/:id', (req, res, next) => {
 */
 
 /**
+ * Options for the contact form's "I'm Interested In" dropdown. Must match the
+ * options in client-new/src/pages/BrandWithUs.jsx.
+ */
+const CONTACT_INTERESTS = [
+  'Brand Subscription',
+  'Development Consulting',
+  'Turn-Key Development',
+  'Not sure yet',
+];
+
+/** Field rules per form: { name: { required, max, oneOf } }. */
+const SEMINAR_FIELDS = {
+  fullname: { required: true, max: 200 },
+  email: { required: true, max: 254 },
+  phoneNumber: { required: true, max: 50 },
+  attendanceType: { oneOf: ['In-Person', 'Webinar'] },
+  company: { max: 200 },
+  jobTitle: { max: 200 },
+  specialRequests: { max: 200 },
+  hearAboutUs: { max: 500 },
+};
+
+const CONTACT_FIELDS = {
+  name: { required: true, max: 200 },
+  email: { required: true, max: 254 },
+  market: { required: true, max: 200 },
+  message: { max: 5000 },
+  interest: { oneOf: CONTACT_INTERESTS },
+};
+
+/**
+ * True when every field matches its rule: a string within its length limit (or
+ * absent/empty when optional), one of the allowed values where listed, and `email`
+ * shaped like an address. The forms already enforce all of this, so a failure means
+ * a hand-built request rather than a real visitor.
+ */
+function hasValidFields(body, fields) {
+  if (!/^[^\s@]+@[^\s@]+$/.test(body.email || '')) return false;
+  return Object.entries(fields).every(([name, rule]) => {
+    const value = body[name];
+    if (value === undefined || value === '') return !rule.required;
+    if (typeof value !== 'string') return false;
+    if (rule.required && value.trim() === '') return false;
+    if (rule.max && value.length > rule.max) return false;
+    return !rule.oneOf || rule.oneOf.includes(value);
+  });
+}
+
+/**
+ * Spam screening shared by the public forms. Resolves true when the submission
+ * should be emailed; otherwise the response has already been sent and the
+ * submission is dropped — caught spam is never stored or emailed.
+ *  1. Honeypot: the hidden "website" field is filled. Answer with a normal success
+ *     so the bot has nothing to learn from.
+ *  2. Field check: missing, oversized, or unexpected values (400).
+ *  3. Cloudflare Turnstile: the widget token must verify. 403 lets the form tell a
+ *     real visitor that verification failed and to try again.
+ */
+async function passesSpamChecks(req, res, fields) {
+  const body = req.body || {};
+  if (body.website) {
+    res.status(200).send();
+    return false;
+  }
+  if (!hasValidFields(body, fields)) {
+    res.status(400).send('Invalid submission');
+    return false;
+  }
+  if (!(await verifyTurnstile(body.turnstileToken))) {
+    res.status(403).send('Verification failed');
+    return false;
+  }
+  return true;
+}
+
+/**
  * Handle the sign up form submission and email.
  */
-router.post('/seminar/sign-up', (req, res, next) => {
-  // Catch honeypot requests and send 200 response to not alert anything is wrong
-  if (req.body && req.body.username) {
-    const honeypot = new Honeypot({
-      timestamp: new Date().toLocaleString(),
-      requestData: JSON.stringify(req.body)
-    });
-    honeypot.save()
-      .then(() => {
-        console.log('saved honeypot');
-        return res.status(200).send('sign up complete');
-      })
-      .catch((e) => {
-        console.log('error saving honeypot', e);
-        return res.status(200).send('sign up complete');
-      });
-  } else {
-    const emailHtml = buildSeminarSignupEmail(req.body);
+router.post('/seminar/sign-up', async (req, res, next) => {
+  if (!(await passesSpamChecks(req, res, SEMINAR_FIELDS))) return;
 
-    transporter.sendMail({
-      from: '"Contractor Garage Website" <webmaster@contractorgarage.com>',
-      to: [
-        'kevin.combs@contractorgarage.com',
-        'kcombs@insightcommercial.net',
-      ],
-      bcc: [
-        'aaron.mcnulty@contractorgarage.com',
-        'amcnulty88@swbell.net',
-      ],
-      subject: 'New Seminar Signup',
-      html: emailHtml,
-    }).then(() => {
-      res.status(200).send();
-    }).catch(next);
-  }
+  const emailHtml = buildSeminarSignupEmail(req.body);
+
+  transporter.sendMail({
+    from: '"Contractor Garage Website" <webmaster@contractorgarage.com>',
+    to: [
+      'kevin.combs@contractorgarage.com',
+      'kcombs@insightcommercial.net',
+    ],
+    bcc: [
+      'aaron.mcnulty@contractorgarage.com',
+      'amcnulty88@swbell.net',
+    ],
+    subject: 'New Seminar Signup',
+    html: emailHtml,
+  }).then(() => {
+    res.status(200).send();
+  }).catch(next);
 })
 
-router.post('/contact', (req, res, next) => {
-  if (req.body && req.body.username) {
-    const honeypot = new Honeypot({
-      timestamp: new Date().toLocaleString(),
-      requestData: JSON.stringify(req.body)
-    });
-    honeypot.save()
-      .then(() => res.status(200).send('message sent'))
-      .catch(() => res.status(200).send('message sent'));
-  } else {
-    const emailHtml = buildContactEmail(req.body);
+router.post('/contact', async (req, res, next) => {
+  if (!(await passesSpamChecks(req, res, CONTACT_FIELDS))) return;
 
-    transporter.sendMail({
-      from: '"Contractor Garage Website" <webmaster@contractorgarage.com>',
-      to: [
-        'kevin.combs@contractorgarage.com',
-        'kcombs@insightcommercial.net',
-      ],
-      bcc: [
-        'aaron.mcnulty@contractorgarage.com',
-        'amcnulty88@swbell.net',
-      ],
-      subject: 'New Contact Form Submission',
-      html: emailHtml,
-    }).then(() => {
-      res.status(200).send();
-    }).catch(next);
-  }
+  const emailHtml = buildContactEmail(req.body);
+  // The interest was checked against CONTACT_INTERESTS, so it is safe in the subject.
+  const subject = req.body.interest
+    ? `New Contact Form Submission — ${req.body.interest}`
+    : 'New Contact Form Submission';
+
+  transporter.sendMail({
+    from: '"Contractor Garage Website" <webmaster@contractorgarage.com>',
+    to: [
+      'kevin.combs@contractorgarage.com',
+      'kcombs@insightcommercial.net',
+    ],
+    bcc: [
+      'aaron.mcnulty@contractorgarage.com',
+      'amcnulty88@swbell.net',
+    ],
+    subject,
+    html: emailHtml,
+  }).then(() => {
+    res.status(200).send();
+  }).catch(next);
 })
 
 module.exports = router;

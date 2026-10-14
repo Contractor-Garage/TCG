@@ -7,13 +7,14 @@
             Pricing & Sign-Up → Syllabus.
 
   The sign-up form posts to /api/seminar/sign-up via API.submitSeminarSignupForm,
-  with a hidden honeypot "username" field (same anti-spam pattern as the contact
-  form). Event dates: April 17–18, 2027.
+  with a Cloudflare Turnstile token and a hidden "website" honeypot (same anti-spam
+  pattern as the contact form). Event dates: April 17–18, 2027.
 */
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { Link } from 'react-router-dom'
 import AnimateOnScroll from '../components/AnimateOnScroll'
+import Turnstile from '../components/Turnstile'
 import useMetaTags from '../hooks/useMetaTags'
 import { API } from '../util/API'
 import kevinImage from '../assets/kevin.jpg'
@@ -180,6 +181,12 @@ const inputClass =
 const labelClass =
   'block font-display font-bold uppercase tracking-widest text-xs text-[#1A1A1A]/50 mb-2'
 
+const submitErrors = {
+  notVerified: "We're still confirming you're not a bot. Please try again in a moment.",
+  verificationFailed: 'Verification failed, please try again.',
+  general: 'Something went wrong. Please try again or email kevin.combs@contractorgarage.com directly.',
+}
+
 export default function Seminar() {
   useMetaTags({
     title: 'Live 2-Day Seminar',
@@ -196,12 +203,14 @@ export default function Seminar() {
     jobTitle: '',
     hearAboutUs: '',
     specialRequests: '',
-    username: '', // honeypot
+    website: '', // honeypot
   })
   const [errors, setErrors] = useState({})
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [failed, setFailed] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState(null)
+  const turnstileRef = useRef(null)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -213,6 +222,7 @@ export default function Seminar() {
     const e = {}
     if (!formData.fullname.trim()) e.fullname = 'Full name is required'
     if (!formData.email.trim()) e.email = 'Email is required'
+    else if (!/^[^\s@]+@[^\s@]+$/.test(formData.email.trim())) e.email = 'Enter a valid email address'
     if (!formData.phoneNumber.trim()) e.phoneNumber = 'Phone number is required'
     return e
   }
@@ -224,16 +234,21 @@ export default function Seminar() {
       setErrors(v)
       return
     }
+    if (!turnstileToken) {
+      setSubmitError(submitErrors.notVerified)
+      return
+    }
     setSubmitting(true)
-    setFailed(false)
-    API.submitSeminarSignupForm(formData)
+    setSubmitError('')
+    API.submitSeminarSignupForm({ ...formData, turnstileToken })
       .then(() => {
         setSuccess(true)
         setSubmitting(false)
       })
-      .catch(() => {
-        setFailed(true)
+      .catch((err) => {
+        setSubmitError(err.response?.status === 403 ? submitErrors.verificationFailed : submitErrors.general)
         setSubmitting(false)
+        turnstileRef.current?.reset()
       })
   }
 
@@ -498,16 +513,17 @@ export default function Seminar() {
                   noValidate
                   className="bg-white border border-[#1A1A1A]/10 p-8 lg:p-10 space-y-5"
                 >
-                  {/* Honeypot — hidden from real users */}
-                  <input
-                    type="text"
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    className="hidden"
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
+                  {/* Honeypot — off-screen and skipped by keyboard and screen readers; bots that fill it are silently ignored */}
+                  <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+                    <input
+                      type="text"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
 
                   <div>
                     <label htmlFor="fullname" className={labelClass}>
@@ -635,11 +651,10 @@ export default function Seminar() {
                     />
                   </div>
 
-                  {failed && (
-                    <p className="text-red-600 text-sm font-semibold">
-                      Something went wrong. Please try again or email
-                      kevin.combs@contractorgarage.com directly.
-                    </p>
+                  <Turnstile ref={turnstileRef} onToken={setTurnstileToken} />
+
+                  {submitError && (
+                    <p className="text-red-600 text-sm font-semibold">{submitError}</p>
                   )}
 
                   <button

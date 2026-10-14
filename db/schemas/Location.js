@@ -43,6 +43,9 @@ const locationSchema = mongoose.Schema({
     features: [String],
     // Unit information
     units: [unitSchema],
+    // Optional property-wide note shown under the availability table (e.g. an early
+    // bird lease-up sale). Shown even when no units are available.
+    availabilityNote: String,
     // Summary of units
     unitSummary: [unitSchema],
     // Contact name

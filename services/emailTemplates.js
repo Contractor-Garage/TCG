@@ -8,16 +8,14 @@ function escapeHtml(str = '') {
 }
 
 function buildSeminarSignupEmail(data) {
-    const {
-        fullname = escapeHtml(fullname),
-        email = escapeHtml(email),
-        phoneNumber = escapeHtml(phoneNumber),
-        attendanceType = escapeHtml(attendanceType),
-        company = escapeHtml(company),
-        jobTitle = escapeHtml(jobTitle),
-        hearAboutUs = escapeHtml(hearAboutUs),
-        specialRequests = escapeHtml(specialRequests),
-    } = data;
+    const fullname = escapeHtml(data.fullname);
+    const email = escapeHtml(data.email);
+    const phoneNumber = escapeHtml(data.phoneNumber);
+    const attendanceType = escapeHtml(data.attendanceType);
+    const company = escapeHtml(data.company);
+    const jobTitle = escapeHtml(data.jobTitle);
+    const hearAboutUs = escapeHtml(data.hearAboutUs);
+    const specialRequests = escapeHtml(data.specialRequests);
 
     return `
   <html>
@@ -84,6 +82,7 @@ function buildContactEmail(data) {
   const name = escapeHtml(data.name);
   const email = escapeHtml(data.email);
   const market = escapeHtml(data.market);
+  const interest = escapeHtml(data.interest) || '—';
   const message = escapeHtml(data.message);
 
   return `
@@ -126,6 +125,7 @@ function buildContactEmail(data) {
           <tr><td>Name</td><td>${name}</td></tr>
           <tr><td>Email</td><td>${email}</td></tr>
           <tr><td>Market (City)</td><td>${market}</td></tr>
+          <tr><td>Interested In</td><td>${interest}</td></tr>
           <tr><td>Message</td><td>${message}</td></tr>
         </table>
       </div>

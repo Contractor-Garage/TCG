@@ -20,7 +20,7 @@ const sections = [
   },
   {
     title: 'Third-Party Services',
-    body: 'This site may link to third-party services such as Spotify, Apple Podcasts, or PayPal. Those services have their own privacy policies, which we encourage you to review.',
+    body: 'This site may link to third-party services such as Spotify, Apple Podcasts, or PayPal. Those services have their own privacy policies, which we encourage you to review. Our forms use Cloudflare Turnstile to block spam.',
   },
   {
     title: 'Data Retention',
