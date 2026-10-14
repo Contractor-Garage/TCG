@@ -16,6 +16,9 @@ const unitSchema = mongoose.Schema({
     // render as the previous day for every US visitor. Dates in the past are treated
     // as "available now" at render time, so no cleanup job is needed.
     availableDate: String,
+    // Optional short note shown under this unit in the website's availability table,
+    // e.g. "Mini split included" or "Additional parking space included".
+    note: String,
     // Width in feet
     width: Number,
     // Height in feet

@@ -1,15 +1,21 @@
 /*
   BrandWithUs — developer/investor pitch page with pricing cards and a contact form.
-  Sections: Hero → Podcast banner → Pricing cards (3) → Live Seminar split → Contact form.
+  Sections: Hero → Podcast banner → Pricing cards (3) → Online Course → Investment Case
+            → Live Seminar split → Contact form.
 
-  CONTACT FORM NOTE: The form currently uses local React state only (handleSubmit just
-  sets submitted=true). To wire it up, replace handleSubmit with an Axios POST to your
-  backend or a form service (e.g. Formspree, EmailJS). The form fields are:
-    name, email, market (city), message.
+  Pricing cards, in order: Brand Subscription → Development Consulting (featured) →
+  Turn-Key Development. Each card's button scrolls to the contact form and pre-selects
+  that service in the "I'm Interested In" dropdown.
+
+  CONTACT FORM: posts to /api/contact via API.submitContactForm with the fields
+  name, email, market (city), interest, message, plus a Cloudflare Turnstile token and
+  a hidden "website" honeypot (the server silently drops submissions that fill it).
+  The interest options must match CONTACT_INTERESTS in routes/api.js.
 */
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AnimateOnScroll from '../components/AnimateOnScroll'
+import Turnstile from '../components/Turnstile'
 import useMetaTags from '../hooks/useMetaTags'
 import { API } from '../util/API'
 import presentingImage from '../assets/presenting.png'
@@ -34,6 +40,28 @@ const subscriptionFeatures = [
   'PayPal payment integration for leads',
   'Credibility with lenders and investors',
 ]
+
+const turnKeyFeatures = [
+  'Provide all communication/coordination between the city, design team, and general contractor',
+  'Lead all entitlement work, including zoning, planning, and permitting',
+  'Source and hire all design professionals',
+  'Source and hire the general contractor and ensure they are complying with contracts, scope of work, schedule, and quality of work',
+  'Create and maintain the pro forma throughout design and construction',
+  'Ideal for owners without construction experience. We deliver the project from start to certificate of occupancy, hands-off.',
+]
+
+const contactInterests = [
+  'Brand Subscription',
+  'Development Consulting',
+  'Turn-Key Development',
+  'Not sure yet',
+]
+
+const contactErrors = {
+  notVerified: "We're still confirming you're not a bot. Please try again in a moment.",
+  verificationFailed: 'Verification failed, please try again.',
+  general: 'Something went wrong. Please try again or email kevin.combs@contractorgarage.com directly.',
+}
 
 const investmentCase = [
   {
@@ -77,29 +105,41 @@ const investmentCase = [
 export default function BrandWithUs() {
   useMetaTags({
     title: 'Development Consulting',
-    description: 'Build a Contractor Garage™ in your market. One-on-one consulting with Kevin Combs, CCIM — site selection, construction specs, lease-up strategy, and brand licensing.',
+    description: 'Build a Contractor Garage™ in your market. One-on-one consulting with Kevin Combs, CCIM — site selection, construction specs, lease-up strategy, brand licensing, and turn-key development.',
   })
-  const [form, setForm] = useState({ name: '', email: '', market: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', market: '', interest: '', message: '', website: '' })
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const [error, setError] = useState(false)
+  const [error, setError] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState(null)
+  const turnstileRef = useRef(null)
 
   const handleChange = (e) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
   }
 
+  /** Card buttons pre-select their service before scrolling to the form. */
+  const selectInterest = (interest) => {
+    setForm((f) => ({ ...f, interest }))
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!turnstileToken) {
+      setError(contactErrors.notVerified)
+      return
+    }
     setSubmitting(true)
-    setError(false)
-    API.submitContactForm(form)
+    setError('')
+    API.submitContactForm({ ...form, turnstileToken })
       .then(() => {
         setSubmitted(true)
         setSubmitting(false)
       })
-      .catch(() => {
-        setError(true)
+      .catch((err) => {
+        setError(err.response?.status === 403 ? contactErrors.verificationFailed : contactErrors.general)
         setSubmitting(false)
+        turnstileRef.current?.reset()
       })
   }
 
@@ -178,20 +218,67 @@ export default function BrandWithUs() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <AnimateOnScroll>
             <p className="font-display font-bold uppercase tracking-[0.2em] text-[#CC6633] text-xs mb-4">
-              How to Work With Kevin
+              How to Work With Us
             </p>
             <h2 className="font-display font-black text-[#1A1A1A] uppercase leading-none text-5xl lg:text-6xl mb-4">
               Choose Your Path
             </h2>
             <p className="text-[#1A1A1A]/55 font-body text-sm mb-14 max-w-lg">
-              This is a brand license, not a franchise. No ongoing royalties, no territory fees.
-              You own your project — Kevin shares the blueprint.
+              This is not a franchise. No ongoing royalties. You own your project — we share
+              the blueprint.
             </p>
           </AnimateOnScroll>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl">
-            {/* Card 1: Development Consulting — FEATURED */}
+          <div className="grid lg:grid-cols-3 gap-6 max-w-2xl lg:max-w-none">
+            {/* Card 1: Brand Subscription */}
             <AnimateOnScroll delay={0.05}>
+              <div className="bg-white border border-[#1A1A1A]/12 flex flex-col h-full">
+                <div className="p-8 lg:p-10 flex flex-col flex-1">
+                  <div className="mb-6">
+                    <p className="font-display font-bold uppercase tracking-widest text-[#CC6633] text-xs mb-2">
+                      License
+                    </p>
+                    <h3 className="font-display font-black uppercase text-2xl lg:text-3xl text-[#1A1A1A] mb-1">
+                      Brand Subscription
+                    </h3>
+                    <div className="flex items-end gap-2 mt-4">
+                      <span className="font-display font-black text-4xl text-[#1A1A1A]">$10K–$30K</span>
+                      <span className="text-[#1A1A1A]/50 text-sm mb-1 font-body">per project · one-time</span>
+                    </div>
+                  </div>
+
+                  <div className="w-full h-px bg-[#1A1A1A]/10 mb-6" />
+
+                  <ul className="space-y-3 flex-1">
+                    {subscriptionFeatures.map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-sm text-[#1A1A1A]/70">
+                        <svg className="w-4 h-4 text-[#CC6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-6 p-4 bg-[#F7F6F4] border border-[#1A1A1A]/8 text-xs text-[#1A1A1A]/55 leading-relaxed">
+                    Priced by project size. This is a simple brand subscription, not a franchise with royalties.
+                  </div>
+
+                  <div className="mt-6">
+                    <a
+                      href="#contact"
+                      onClick={() => selectInterest('Brand Subscription')}
+                      className="block w-full text-center font-display font-bold uppercase tracking-wider text-sm border-2 border-[#1A1A1A] text-[#1A1A1A] py-3.5 hover:bg-[#1A1A1A] hover:text-white transition-colors"
+                    >
+                      Get Started
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </AnimateOnScroll>
+
+            {/* Card 2: Development Consulting — FEATURED */}
+            <AnimateOnScroll delay={0.1}>
               <div className="relative bg-[#1A1A1A] text-white flex flex-col h-full border-t-4 border-[#CC6633] shadow-2xl shadow-[#1A1A1A]/20">
                 <div className="absolute top-0 right-6 -translate-y-1/2">
                   <span className="inline-block font-display font-black uppercase tracking-widest text-xs bg-[#CC6633] text-white px-4 py-1.5">
@@ -225,9 +312,14 @@ export default function BrandWithUs() {
                     ))}
                   </ul>
 
-                  <div className="mt-8">
+                  <div className="mt-6 p-4 bg-white/5 border border-white/10 text-xs text-white/55 leading-relaxed">
+                    Brand subscription required.
+                  </div>
+
+                  <div className="mt-6">
                     <a
                       href="#contact"
+                      onClick={() => selectInterest('Development Consulting')}
                       className="block w-full text-center font-display font-bold uppercase tracking-wider text-sm bg-[#CC6633] text-white py-3.5 hover:bg-[#A85228] transition-colors"
                     >
                       Talk to Kevin
@@ -237,27 +329,27 @@ export default function BrandWithUs() {
               </div>
             </AnimateOnScroll>
 
-            {/* Card 2: Brand Subscription */}
-            <AnimateOnScroll delay={0.1}>
+            {/* Card 3: Turn-Key Development */}
+            <AnimateOnScroll delay={0.15}>
               <div className="bg-white border border-[#1A1A1A]/12 flex flex-col h-full">
                 <div className="p-8 lg:p-10 flex flex-col flex-1">
                   <div className="mb-6">
                     <p className="font-display font-bold uppercase tracking-widest text-[#CC6633] text-xs mb-2">
-                      License
+                      No Construction Experience Needed
                     </p>
                     <h3 className="font-display font-black uppercase text-2xl lg:text-3xl text-[#1A1A1A] mb-1">
-                      Brand Subscription
+                      Turn-Key Development
                     </h3>
-                    <div className="flex items-end gap-2 mt-4">
-                      <span className="font-display font-black text-4xl text-[#1A1A1A]">$10K–$30K</span>
-                      <span className="text-[#1A1A1A]/50 text-sm mb-1 font-body">per project · one-time</span>
+                    {/* Same height as the other cards' price lines so the dividers line up */}
+                    <div className="flex items-end gap-2 mt-4 h-10">
+                      <span className="text-[#1A1A1A]/50 text-sm mb-1 font-body">Fee dependent on scope</span>
                     </div>
                   </div>
 
                   <div className="w-full h-px bg-[#1A1A1A]/10 mb-6" />
 
                   <ul className="space-y-3 flex-1">
-                    {subscriptionFeatures.map((f) => (
+                    {turnKeyFeatures.map((f) => (
                       <li key={f} className="flex items-start gap-3 text-sm text-[#1A1A1A]/70">
                         <svg className="w-4 h-4 text-[#CC6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -268,12 +360,13 @@ export default function BrandWithUs() {
                   </ul>
 
                   <div className="mt-6 p-4 bg-[#F7F6F4] border border-[#1A1A1A]/8 text-xs text-[#1A1A1A]/55 leading-relaxed">
-                    Priced by project size. This is a simple brand subscription, not a franchise with royalties or annual fees.
+                    Site procurement, syndication, financing, leasing, and management services not included. Brand subscription required. Our exclusive developer is an independent contractor.
                   </div>
 
                   <div className="mt-6">
                     <a
                       href="#contact"
+                      onClick={() => selectInterest('Turn-Key Development')}
                       className="block w-full text-center font-display font-bold uppercase tracking-wider text-sm border-2 border-[#1A1A1A] text-[#1A1A1A] py-3.5 hover:bg-[#1A1A1A] hover:text-white transition-colors"
                     >
                       Get Started
@@ -282,7 +375,6 @@ export default function BrandWithUs() {
                 </div>
               </div>
             </AnimateOnScroll>
-
           </div>
         </div>
       </section>
@@ -490,7 +582,10 @@ export default function BrandWithUs() {
                   onSubmit={handleSubmit}
                   className="bg-white border border-[#1A1A1A]/10 p-8 lg:p-10 space-y-5"
                 >
-                  <input type="text" name="username" className="hidden" tabIndex={-1} autoComplete="off" />
+                  {/* Honeypot — off-screen and skipped by keyboard and screen readers; bots that fill it are silently ignored */}
+                  <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+                    <input type="text" name="website" value={form.website} onChange={handleChange} tabIndex={-1} autoComplete="off" />
+                  </div>
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
                       <label className="block font-display font-bold uppercase tracking-widest text-xs text-[#1A1A1A]/50 mb-2">
@@ -521,19 +616,37 @@ export default function BrandWithUs() {
                       />
                     </div>
                   </div>
-                  <div>
-                    <label className="block font-display font-bold uppercase tracking-widest text-xs text-[#1A1A1A]/50 mb-2">
-                      Your Market / City
-                    </label>
-                    <input
-                      name="market"
-                      type="text"
-                      required
-                      value={form.market}
-                      onChange={handleChange}
-                      placeholder="e.g. Nashville, TN or Denver, CO"
-                      className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:outline-none focus:border-[#CC6633] transition-colors"
-                    />
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block font-display font-bold uppercase tracking-widest text-xs text-[#1A1A1A]/50 mb-2">
+                        Your Market / City
+                      </label>
+                      <input
+                        name="market"
+                        type="text"
+                        required
+                        value={form.market}
+                        onChange={handleChange}
+                        placeholder="e.g. Nashville, TN or Denver, CO"
+                        className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:outline-none focus:border-[#CC6633] transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-display font-bold uppercase tracking-widest text-xs text-[#1A1A1A]/50 mb-2">
+                        I'm Interested In
+                      </label>
+                      <select
+                        name="interest"
+                        value={form.interest}
+                        onChange={handleChange}
+                        className={`w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm focus:outline-none focus:border-[#CC6633] transition-colors ${form.interest ? 'text-[#1A1A1A]' : 'text-[#1A1A1A]/30'}`}
+                      >
+                        <option value="">Select one (optional)</option>
+                        {contactInterests.map((interest) => (
+                          <option key={interest} value={interest} className="text-[#1A1A1A]">{interest}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                   <div>
                     <label className="block font-display font-bold uppercase tracking-widest text-xs text-[#1A1A1A]/50 mb-2">
@@ -542,16 +655,16 @@ export default function BrandWithUs() {
                     <textarea
                       name="message"
                       rows={5}
+                      maxLength={5000}
                       value={form.message}
                       onChange={handleChange}
                       placeholder="Tell Kevin what you're working with — land you're evaluating, stage you're at, what you want to know..."
                       className="w-full border border-[#1A1A1A]/15 bg-[#F7F6F4] px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:outline-none focus:border-[#CC6633] transition-colors resize-none"
                     />
                   </div>
+                  <Turnstile ref={turnstileRef} onToken={setTurnstileToken} />
                   {error && (
-                    <p className="text-red-600 text-sm font-semibold">
-                      Something went wrong. Please try again or email kevin.combs@contractorgarage.com directly.
-                    </p>
+                    <p className="text-red-600 text-sm font-semibold">{error}</p>
                   )}
                   <button
                     type="submit"
