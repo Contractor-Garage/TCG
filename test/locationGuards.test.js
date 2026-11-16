@@ -96,13 +96,13 @@ test('B14: deleting a location keeps files another location still uses', async (
   assert.deepEqual(t.deletedIds('image'), ['TCG/only-mine']);
 });
 
-test('B15 (held back until the portal fix is live): clearing the banner or thumbnail keeps the file for now', async () => {
+test('B15: removing the banner or thumbnail deletes the old file', async () => {
   const loc = await t.makeLocation({ bannerImage: t.img('old-banner'), thumbnailImage: t.img('old-thumb') });
   await t.request('PUT', '/portal/location', { _id: loc._id, bannerImage: null, thumbnailImage: null });
   const saved = await t.Location.findById(loc._id);
   assert.equal(saved.bannerImage, null);
   assert.equal(saved.thumbnailImage, null);
-  assert.equal(t.cloudinaryDeletes.length, 0);
+  assert.deepEqual(t.deletedIds('image').sort(), ['TCG/old-banner', 'TCG/old-thumb']);
 });
 
 test('a file moved from the gallery to the banner is not deleted', async () => {
