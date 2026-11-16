@@ -25,7 +25,9 @@ axios.delete = async (url) => { cloudinaryDeletes.push(url); return { status: 20
 /** Public ids (e.g. "TCG/abc") the server asked Cloudinary to delete, by resource type. */
 const deletedIds = (type = 'image') => cloudinaryDeletes
   .filter(u => u.includes(`/resources/${type}/upload?`))
-  .flatMap(u => u.split('?')[1].split('&').map(p => decodeURIComponent(p.replace('public_ids[]=', ''))));
+  .flatMap(u => u.split('?')[1].split('&'))
+  .filter(p => p.startsWith('public_ids[]=') || p.startsWith(encodeURIComponent('public_ids[]') + '='))
+  .map(p => decodeURIComponent(p.slice(p.indexOf('=') + 1)));
 
 const Location = require('../../db/schemas/Location');
 const User = require('../../db/schemas/User');
@@ -63,6 +65,7 @@ const stop = async () => {
 
 const reset = async () => {
   await Location.deleteMany({});
+  await User.deleteMany({});
   cloudinaryDeletes.length = 0;
   actAs(ADMIN);
 };
@@ -76,6 +79,7 @@ const request = async (method, path, body) => {
     signal: AbortSignal.timeout(5000)
   });
   const text = await res.text();
+  await require('../../services/cloudinaryService').cleanupIdle(); // let any file cleanup finish
   let parsed = text;
   try { parsed = JSON.parse(text); } catch (e) { /* plain text response */ }
   return { status: res.status, body: parsed };

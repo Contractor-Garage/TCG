@@ -8,6 +8,8 @@
  * Settings (environment variables):
  *   MONGOD_PATH   path to mongod.exe (default: the MongoDB 4.2 install location on this laptop)
  *   TEST_DB_URI   use an already-running test database instead of starting one
+ *
+ * Extra arguments go to Node's test runner: `npm test -- --test-name-pattern=B14`.
  */
 const { spawn } = require('child_process');
 const fs = require('fs');
@@ -39,7 +41,8 @@ const waitForPort = (port, timeoutMs) => new Promise((resolve, reject) => {
 
 const runTests = (dbUri) => new Promise((resolve) => {
   const files = fs.readdirSync(__dirname).filter(f => f.endsWith('.test.js')).map(f => path.join(__dirname, f));
-  const child = spawn(process.execPath, ['--test', '--test-concurrency=1', ...files], {
+  // Extra arguments are passed to Node's test runner, e.g. `npm test -- --test-name-pattern=B14`.
+  const child = spawn(process.execPath, ['--test', '--test-concurrency=1', ...process.argv.slice(2), ...files], {
     stdio: 'inherit',
     env: { ...process.env, TEST_DB_URI: dbUri }
   });
