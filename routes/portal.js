@@ -345,13 +345,9 @@ router.put('/location', async (req, res) => {
       res.status(401).send('You don\'t have access to this location!');
       return;
     }
-    // Only now that the change is saved, delete files the location no longer uses.
-    // A thumbnail or banner cleared with null is not deleted yet: older portal builds can send a stale
-    // null, so that file stays in Cloudinary (re-attachable) until the portal fix is live.
-    const keepUrls = ['thumbnailImage', 'bannerImage']
-      .filter(key => update[key] === null && location[key] && location[key].src)
-      .map(key => location[key].src);
-    CloudinaryService.cleanupRemovedMedia(location, updated, { keepUrls });
+    // Only now that the change is saved, delete files the location no longer uses
+    // (including a thumbnail or banner the user removed, B15).
+    CloudinaryService.cleanupRemovedMedia(location, updated);
     res.status(200).json(updated);
   }
   catch (err) {
